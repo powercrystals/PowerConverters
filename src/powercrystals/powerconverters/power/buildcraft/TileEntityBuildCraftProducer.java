@@ -1,0 +1,68 @@
+package powercrystals.powerconverters.power.buildcraft;
+
+import java.util.Map.Entry;
+
+import net.minecraftforge.common.ForgeDirection;
+import buildcraft.api.power.IPowerProvider;
+import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerFramework;
+import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.power.TileEntityEnergyProducer;
+
+public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowerReceptor> implements IPowerReceptor
+{
+	private IPowerProvider _powerProvider;
+	
+	public TileEntityBuildCraftProducer()
+	{
+		super(PowerSystem.BuildCraft, 0, IPowerReceptor.class);
+		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
+		_powerProvider.configure(0, 0, 0, 0, 0);
+	}
+	
+	@Override
+	public int produceEnergy(int energy)
+	{
+		int mj = energy / PowerSystem.BuildCraft.getInternalEnergyPerInput();
+		
+		for(Entry<ForgeDirection, IPowerReceptor> output : getTiles().entrySet())
+		{
+			IPowerProvider pp = output.getValue().getPowerProvider();
+			if(pp != null && pp.preConditions(output.getValue()) && pp.getMinEnergyReceived() <= mj)
+			{
+				int energyUsed = Math.min(Math.min(pp.getMaxEnergyReceived(), mj), pp.getMaxEnergyStored() - (int)Math.floor(pp.getEnergyStored()));
+				pp.receiveEnergy(energyUsed, output.getKey());
+				
+				energy -= energyUsed * PowerSystem.BuildCraft.getInternalEnergyPerInput();
+				if(energy <= 0)
+				{
+					return 0;
+				}
+			}
+		}
+		return energy;
+	}
+
+	@Override
+	public void setPowerProvider(IPowerProvider provider)
+	{
+		_powerProvider = provider;
+	}
+
+	@Override
+	public IPowerProvider getPowerProvider()
+	{
+		return _powerProvider;
+	}
+
+	@Override
+	public void doWork()
+	{
+	}
+
+	@Override
+	public int powerRequest()
+	{
+		return 0;
+	}
+}
