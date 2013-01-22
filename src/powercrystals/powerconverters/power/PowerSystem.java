@@ -1,29 +1,46 @@
 package powercrystals.powerconverters.power;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraftforge.common.Configuration;
 
-public enum PowerSystem
+public class PowerSystem
 {
-	BuildCraft("BuildCraft", "BC", 4375, 4375, null, "MJ/t"),
-	IndustrialCraft2("IndustrialCraft", "IC2", 1800, 1800, new String[] { "LV", "MV", "HV", "EV" }, "EU/t"),
-	Steam("Steam", "STEAM", 875, 875, null, "mB/t"),
-	UniversalElectricity("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV" }, "W");
+	private static Map<Integer, PowerSystem> _powerSystems = new HashMap<Integer, PowerSystem>();
+	private static Integer _nextPowerSystemId = 0;
 	
 	private String _abbreviation;
 	private String _name;
 	private int _internalEnergyPerInput;
 	private int _internalEnergyPerOutput;
 	private String[] _voltageNames;
+	private int[] _voltageValues;
 	private String _unit;
+	private int _id;
 	
-	private PowerSystem(String name, String abbreviation, int energyPerInput, int energyPerOutput, String[] voltageNames, String unit)
+	public PowerSystem(String name, String abbreviation, int energyPerInput, int energyPerOutput, String[] voltageNames, int[] voltageValues, String unit)
 	{
 		_name = name;
 		_abbreviation = abbreviation;
 		_internalEnergyPerInput = energyPerInput;
 		_internalEnergyPerOutput = energyPerOutput;
 		_voltageNames = voltageNames;
+		_voltageValues = voltageValues;
 		_unit = unit;
+	}
+	
+	public static void registerPowerSystem(PowerSystem powerSystem)
+	{
+		_powerSystems.put(_nextPowerSystemId, powerSystem);
+		powerSystem._id = _nextPowerSystemId;
+		_nextPowerSystemId++;
+	}
+	
+	public static PowerSystem getPowerSystemById(int id)
+	{
+		return _powerSystems.get(id);
 	}
 	
 	public String getAbbreviation()
@@ -36,10 +53,13 @@ public enum PowerSystem
 		return _name;
 	}
 	
-	public void loadConfig(Configuration c)
+	public static void loadConfig(Configuration c)
 	{
-		_internalEnergyPerInput = c.get("RATIOS", _name + "InternalEnergyPerEachInput", _internalEnergyPerInput).getInt();
-		_internalEnergyPerOutput = c.get("RATIOS", _name + "InternalEnergyPerEachOutput", _internalEnergyPerOutput).getInt();
+		for(Entry<Integer, PowerSystem> p : _powerSystems.entrySet())
+		{
+			p.getValue()._internalEnergyPerInput = c.get("RATIOS", p.getValue()._name + "InternalEnergyPerEachInput", p.getValue()._internalEnergyPerInput).getInt();
+			p.getValue()._internalEnergyPerOutput = c.get("RATIOS", p.getValue()._name + "InternalEnergyPerEachOutput", p.getValue()._internalEnergyPerOutput).getInt();
+		}
 	}
 	
 	public int getInternalEnergyPerInput()
@@ -57,8 +77,18 @@ public enum PowerSystem
 		return _voltageNames;
 	}
 	
+	public int[] getVoltageValues()
+	{
+		return _voltageValues;
+	}
+	
 	public String getUnit()
 	{
 		return _unit;
+	}
+	
+	public int getId()
+	{
+		return _id;
 	}
 }

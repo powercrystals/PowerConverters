@@ -7,7 +7,7 @@ import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergyEmitter;
 import ic2.api.energy.tile.IEnergySink;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 
 public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<IEnergyEmitter> implements IEnergySink
@@ -20,7 +20,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	
 	public TileEntityIndustrialCraftConsumer(int voltageIndex, int voltageMax)
 	{
-		super(PowerSystem.IndustrialCraft2, voltageIndex, IEnergyEmitter.class);
+		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyEmitter.class);
 		_voltageMax = Integer.MAX_VALUE;
 	}
 	
@@ -77,14 +77,14 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	@Override
 	public int demandsEnergy()
 	{
-		return getTotalEnergyDemand() / PowerSystem.IndustrialCraft2.getInternalEnergyPerInput();
+		return getTotalEnergyDemand() / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput();
 	}
 
 	@Override
 	public int injectEnergy(Direction directionFrom, int amount)
 	{
-		int pcuNotStored = storeEnergy(amount * PowerSystem.IndustrialCraft2.getInternalEnergyPerInput());
-		int euNotStored = pcuNotStored / PowerSystem.IndustrialCraft2.getInternalEnergyPerInput();
+		int pcuNotStored = storeEnergy(amount * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput());
+		int euNotStored = pcuNotStored / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput();
 		
 		int euThisInjection = (amount - euNotStored);
 		

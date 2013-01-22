@@ -64,7 +64,7 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.0.0";
+	public static final String version = "1.4.6R2.1.0B1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -83,16 +83,31 @@ public class PowerConverterCore implements IUpdateableMod
 	public static PowerConverterCore instance;
 	
 	private static Property blockIdCommon;
-	private static Property blockIdBuildcraft;
-	private static Property blockIdIndustrialcraft;
+	private static Property blockIdBuildCraft;
+	private static Property blockIdIndustrialCraft;
 	private static Property blockIdSteam;
 	private static Property blockIdUniversalElectricty;
+	
+	public static PowerSystem powerSystemBuildCraft;
+	public static PowerSystem powerSystemIndustrialCraft;
+	public static PowerSystem powerSystemSteam;
+	public static PowerSystem powerSystemUniversalElectricity;
 	
 	public static int steamId = -1;
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent evt)
 	{
+		powerSystemBuildCraft = new PowerSystem("BuildCraft", "BC", 4375, 4375, null, null, "MJ/t");
+		powerSystemIndustrialCraft = new PowerSystem("IndustrialCraft", "IC2", 1800, 1800, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 32, 128, 512, 2048 }, "EU/t");
+		powerSystemSteam = new PowerSystem("Steam", "STEAM", 875, 875, null, null, "mB/t");
+		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV" }, new int[] { 60, 120, 240 }, "W");
+		
+		PowerSystem.registerPowerSystem(powerSystemBuildCraft);
+		PowerSystem.registerPowerSystem(powerSystemIndustrialCraft);
+		PowerSystem.registerPowerSystem(powerSystemSteam);
+		PowerSystem.registerPowerSystem(powerSystemUniversalElectricity);
+		
 		Configuration c = new Configuration(evt.getSuggestedConfigurationFile());
 		loadConfig(c);
 	}
@@ -116,7 +131,7 @@ public class PowerConverterCore implements IUpdateableMod
 		
 		if(Loader.isModLoaded("BuildCraft|Energy"))
 		{
-			converterBlockBuildCraft = new BlockPowerConverterBuildCraft(blockIdBuildcraft.getInt());
+			converterBlockBuildCraft = new BlockPowerConverterBuildCraft(blockIdBuildCraft.getInt());
 			GameRegistry.registerBlock(converterBlockBuildCraft, ItemBlockPowerConverterBuildCraft.class, "blockPowerConverterBuildCraft");
 			GameRegistry.registerTileEntity(TileEntityBuildCraftConsumer.class, "powerConverterBCConsumer");
 			GameRegistry.registerTileEntity(TileEntityBuildCraftProducer.class, "powerConverterBCProducer");
@@ -134,7 +149,7 @@ public class PowerConverterCore implements IUpdateableMod
 		
 		if(Loader.isModLoaded("IC2"))
 		{
-			converterBlockIndustrialCraft = new BlockPowerConverterIndustrialCraft(blockIdIndustrialcraft.getInt());
+			converterBlockIndustrialCraft = new BlockPowerConverterIndustrialCraft(blockIdIndustrialCraft.getInt());
 			GameRegistry.registerBlock(converterBlockIndustrialCraft, ItemBlockPowerConverterIndustrialCraft.class, "blockPowerConverterIndustrialCraft");
 			GameRegistry.registerTileEntity(TileEntityIndustrialCraftConsumer.class, "powerConverterIC2Consumer");
 			GameRegistry.registerTileEntity(TileEntityIndustrialCraftProducer.class, "powerConverterIC2Producer");
@@ -263,15 +278,12 @@ public class PowerConverterCore implements IUpdateableMod
 	private static void loadConfig(Configuration c)
 	{
 		blockIdCommon = c.getBlock("ID.BlockCommon", 2850);
-		blockIdBuildcraft = c.getBlock("ID.BlockBuildcraft", 2851);
-		blockIdIndustrialcraft = c.getBlock("ID.BlockIndustrialCraft", 2852);
+		blockIdBuildCraft = c.getBlock("ID.BlockBuildcraft", 2851);
+		blockIdIndustrialCraft = c.getBlock("ID.BlockIndustrialCraft", 2852);
 		blockIdSteam = c.getBlock("ID.BlockSteam", 2853);
 		blockIdUniversalElectricty = c.getBlock("ID.BlockUniversalElectricty", 2854);
 		
-		for(PowerSystem s : PowerSystem.values())
-		{
-			s.loadConfig(c);
-		}
+		PowerSystem.loadConfig(c);
 		
 		c.save();
 	}

@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.ForgeDirection;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import universalelectricity.core.UniversalElectricity;
 import universalelectricity.core.electricity.ElectricityConnections;
@@ -22,7 +22,7 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	
 	public TileEntityUniversalElectricityConsumer(int voltageIndex, int voltageMax)
 	{
-		super(PowerSystem.UniversalElectricity, voltageIndex, IConductor.class);
+		super(PowerConverterCore.powerSystemUniversalElectricity, voltageIndex, IConductor.class);
 		ElectricityConnections.registerConnector(this, EnumSet.range(ForgeDirection.DOWN, ForgeDirection.EAST));
 		_voltageMax = voltageMax;
 	}
@@ -47,7 +47,7 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 				}
 				else
 				{
-					int desiredWatts = getTotalEnergyDemand() / PowerSystem.UniversalElectricity.getInternalEnergyPerInput();
+					int desiredWatts = getTotalEnergyDemand() / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerInput();
 					inputNetwork.startRequesting(this, desiredWatts / getVoltage(), getVoltage());
 					ElectricityPack pack = inputNetwork.consumeElectricity(this);
 					
@@ -65,7 +65,7 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 			}
 		}
 		
-		storeEnergy(MathHelper.floor_double(watts * PowerSystem.UniversalElectricity.getInternalEnergyPerInput()));
+		storeEnergy(MathHelper.floor_double(watts * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerInput()));
 		_wattsLastTick = (int)watts;
 	}
 

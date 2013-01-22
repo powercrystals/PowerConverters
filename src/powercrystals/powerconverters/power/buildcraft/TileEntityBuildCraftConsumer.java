@@ -1,7 +1,7 @@
 package powercrystals.powerconverters.power.buildcraft;
 
 import net.minecraft.util.MathHelper;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;
@@ -14,7 +14,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	
 	public TileEntityBuildCraftConsumer()
 	{
-		super(PowerSystem.BuildCraft, 0, IPowerReceptor.class);
+		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
 		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
 		_powerProvider.configure(25, 10, 10, 1, 1000);
 	}
@@ -33,7 +33,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 		{
 			float used = _powerProvider.useEnergy(1, mjStored, true);
 			_mjLastTick = MathHelper.floor_float(used);
-			storeEnergy((int)(used * PowerSystem.BuildCraft.getInternalEnergyPerInput()));
+			storeEnergy((int)(used * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput()));
 		}
 		else
 		{
@@ -61,7 +61,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	@Override
 	public int powerRequest()
 	{
-		return getTotalEnergyDemand() / PowerSystem.BuildCraft.getInternalEnergyPerInput();
+		return getTotalEnergyDemand() / PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
 	}
 
 	@Override

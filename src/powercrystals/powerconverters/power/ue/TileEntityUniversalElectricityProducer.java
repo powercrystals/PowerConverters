@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.ForgeDirection;
 
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 import universalelectricity.core.electricity.Electricity;
 import universalelectricity.core.electricity.ElectricityConnections;
@@ -21,7 +21,7 @@ public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProd
 	
 	public TileEntityUniversalElectricityProducer(int voltageIndex, int voltageMax)
 	{
-		super(PowerSystem.UniversalElectricity, voltageIndex, IConductor.class);
+		super(PowerConverterCore.powerSystemUniversalElectricity, voltageIndex, IConductor.class);
 		ElectricityConnections.registerConnector(this, EnumSet.range(ForgeDirection.DOWN, ForgeDirection.EAST));
 		_voltageMax = voltageMax;
 	}
@@ -29,7 +29,7 @@ public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProd
 	@Override
 	public int produceEnergy(int energy)
 	{
-		double watts = energy / PowerSystem.UniversalElectricity.getInternalEnergyPerOutput();
+		double watts = energy / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
 		
 		for(Entry<ForgeDirection, IConductor> conductor : getTiles().entrySet())
 		{
@@ -51,7 +51,7 @@ public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProd
 			//break; // UE cannot handle multiple output faces, oh well~
 		}
 		
-		return MathHelper.floor_double(watts * PowerSystem.UniversalElectricity.getInternalEnergyPerOutput());
+		return MathHelper.floor_double(watts * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
 	}
 
 	@Override

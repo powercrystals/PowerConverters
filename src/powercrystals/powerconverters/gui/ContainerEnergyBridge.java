@@ -42,7 +42,7 @@ public class ContainerEnergyBridge extends Container
 			if(sidevar == 0) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).voltageNameIndex = value;
 			if(sidevar == 1) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isConsumer = (value != 0);
 			if(sidevar == 2) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isProducer = (value != 0);
-			if(sidevar == 3) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).powerSystem = PowerSystem.values()[value];
+			if(sidevar == 3) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).powerSystem = PowerSystem.getPowerSystemById(value);
 			if(sidevar == 4) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isConnected = (value != 0);
 			if(sidevar == 5) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).outputRate = value;
 		}
@@ -63,7 +63,7 @@ public class ContainerEnergyBridge extends Container
 				((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, side * _numParams + 2, data.isProducer ? 1 : 0);
 				if(data.powerSystem != null)
 				{
-					((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, side * _numParams + 3, data.powerSystem.ordinal());
+					((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, side * _numParams + 3, data.powerSystem.getId());
 				}
 				((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, side * _numParams + 4, data.isConnected ? 1 : 0);
 				((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, side * _numParams + 5, data.outputRate);

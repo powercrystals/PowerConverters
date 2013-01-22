@@ -7,20 +7,19 @@ import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import powercrystals.core.position.BlockPosition;
 import powercrystals.powerconverters.PowerConverterCore;
-import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankContainer> implements IMachine
 {
 	public TileEntityRailCraftProducer()
 	{
-		super(PowerSystem.Steam, 0, ITankContainer.class);
+		super(PowerConverterCore.powerSystemSteam, 0, ITankContainer.class);
 	}
 	
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int steam = energy / PowerSystem.Steam.getInternalEnergyPerOutput();
+		int steam = energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
 		for(int i = 0; i < 6; i++)
 		{
 			BlockPosition bp = new BlockPosition(this);
@@ -38,7 +37,7 @@ public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankC
 			}
 		}
 
-		return steam * PowerSystem.Steam.getInternalEnergyPerOutput();
+		return steam * PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
 	}
 	
 	@Override

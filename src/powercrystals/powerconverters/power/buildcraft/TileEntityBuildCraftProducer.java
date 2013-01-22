@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeDirection;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerFramework;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowerReceptor> implements IPowerReceptor
@@ -15,7 +15,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 	
 	public TileEntityBuildCraftProducer()
 	{
-		super(PowerSystem.BuildCraft, 0, IPowerReceptor.class);
+		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
 		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
 		_powerProvider.configure(0, 0, 0, 0, 0);
 	}
@@ -23,7 +23,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int mj = energy / PowerSystem.BuildCraft.getInternalEnergyPerInput();
+		int mj = energy / PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
 		
 		for(Entry<ForgeDirection, IPowerReceptor> output : getTiles().entrySet())
 		{
@@ -33,7 +33,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 				int energyUsed = Math.min(Math.min(pp.getMaxEnergyReceived(), mj), pp.getMaxEnergyStored() - (int)Math.floor(pp.getEnergyStored()));
 				pp.receiveEnergy(energyUsed, output.getKey());
 				
-				energy -= energyUsed * PowerSystem.BuildCraft.getInternalEnergyPerInput();
+				energy -= energyUsed * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
 				if(energy <= 0)
 				{
 					return 0;

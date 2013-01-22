@@ -7,7 +7,6 @@ import net.minecraftforge.liquids.LiquidContainerRegistry;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 import powercrystals.powerconverters.PowerConverterCore;
-import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 
 public class TileEntityRailCraftConsumer extends TileEntityEnergyConsumer<ITankContainer> implements ITankContainer
@@ -17,7 +16,7 @@ public class TileEntityRailCraftConsumer extends TileEntityEnergyConsumer<ITankC
 	
 	public TileEntityRailCraftConsumer()
 	{
-		super(PowerSystem.Steam, 0, ITankContainer.class);
+		super(PowerConverterCore.powerSystemSteam, 0, ITankContainer.class);
 		_steamTank = new LiquidTank(1 * LiquidContainerRegistry.BUCKET_VOLUME);
 	}
 	
@@ -29,9 +28,9 @@ public class TileEntityRailCraftConsumer extends TileEntityEnergyConsumer<ITankC
 		if(_steamTank != null && _steamTank.getLiquid() != null)
 		{
 			int amount = _steamTank.getLiquid().amount;
-			int energy = amount * PowerSystem.Steam.getInternalEnergyPerInput();
+			int energy = amount * PowerConverterCore.powerSystemSteam.getInternalEnergyPerInput();
 			energy = storeEnergy(energy);
-			int toDrain = amount - (energy / PowerSystem.Steam.getInternalEnergyPerInput());
+			int toDrain = amount - (energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerInput());
 			_steamTank.drain(toDrain, true);
 			_mBLastTick = toDrain;
 		}

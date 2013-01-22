@@ -8,7 +8,7 @@ import ic2.api.energy.event.EnergyTileSourceEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergyAcceptor;
 import ic2.api.energy.tile.IEnergySource;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<IEnergyAcceptor> implements IEnergySource
@@ -19,7 +19,7 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	
 	public TileEntityIndustrialCraftProducer(int voltageIndex, int voltageMax)
 	{
-		super(PowerSystem.IndustrialCraft2, voltageIndex, IEnergyAcceptor.class);
+		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyAcceptor.class);
 		_voltageMax = voltageMax;
 	}
 	
@@ -59,7 +59,7 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int eu = energy / PowerSystem.IndustrialCraft2.getInternalEnergyPerOutput();
+		int eu = energy / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
 		if(eu < getMaxEnergyOutput())
 		{
 			return energy;
@@ -68,7 +68,7 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 		EnergyTileSourceEvent e = new EnergyTileSourceEvent(this, producedEu);
 		MinecraftForge.EVENT_BUS.post(e);
 		
-		return (eu - (producedEu - e.amount)) * PowerSystem.IndustrialCraft2.getInternalEnergyPerOutput();
+		return (eu - (producedEu - e.amount)) * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
 	}
 
 	@Override
