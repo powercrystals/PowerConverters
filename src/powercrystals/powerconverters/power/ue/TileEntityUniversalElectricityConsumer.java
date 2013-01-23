@@ -20,11 +20,16 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	private int _wattsLastTick;
 	private int _voltageMax;
 	
-	public TileEntityUniversalElectricityConsumer(int voltageIndex, int voltageMax)
+	public TileEntityUniversalElectricityConsumer()
+	{
+		this(0);
+	}
+	
+	public TileEntityUniversalElectricityConsumer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemUniversalElectricity, voltageIndex, IConductor.class);
 		ElectricityConnections.registerConnector(this, EnumSet.range(ForgeDirection.DOWN, ForgeDirection.EAST));
-		_voltageMax = voltageMax;
+		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 	
 	@Override

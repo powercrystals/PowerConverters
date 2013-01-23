@@ -19,11 +19,16 @@ public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProd
 {
 	private int _voltageMax;
 	
-	public TileEntityUniversalElectricityProducer(int voltageIndex, int voltageMax)
+	public TileEntityUniversalElectricityProducer()
+	{
+		this(0);
+	}
+	
+	public TileEntityUniversalElectricityProducer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemUniversalElectricity, voltageIndex, IConductor.class);
 		ElectricityConnections.registerConnector(this, EnumSet.range(ForgeDirection.DOWN, ForgeDirection.EAST));
-		_voltageMax = voltageMax;
+		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 
 	@Override

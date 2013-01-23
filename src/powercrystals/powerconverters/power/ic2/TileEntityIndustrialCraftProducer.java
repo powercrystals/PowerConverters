@@ -17,10 +17,15 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	private boolean _didFirstAddToNet;
 	private int _voltageMax;
 	
-	public TileEntityIndustrialCraftProducer(int voltageIndex, int voltageMax)
+	public TileEntityIndustrialCraftProducer()
+	{
+		this(0);
+	}
+	
+	public TileEntityIndustrialCraftProducer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyAcceptor.class);
-		_voltageMax = voltageMax;
+		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 	
 	@Override

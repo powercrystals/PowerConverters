@@ -39,12 +39,12 @@ public class BlockPowerConverterUniversalElectricity extends BlockPowerConverter
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata)
 	{
-		if(metadata == 0) return new TileEntityUniversalElectricityConsumer(0, 60);
-		else if(metadata == 1) return new TileEntityUniversalElectricityProducer(0, 60);
-		else if(metadata == 2) return new TileEntityUniversalElectricityConsumer(1, 120);
-		else if(metadata == 3) return new TileEntityUniversalElectricityProducer(1, 120);
-		else if(metadata == 4) return new TileEntityUniversalElectricityConsumer(2, 240);
-		else if(metadata == 5) return new TileEntityUniversalElectricityProducer(2, 240);
+		if(metadata == 0) return new TileEntityUniversalElectricityConsumer(0);
+		else if(metadata == 1) return new TileEntityUniversalElectricityProducer(0);
+		else if(metadata == 2) return new TileEntityUniversalElectricityConsumer(1);
+		else if(metadata == 3) return new TileEntityUniversalElectricityProducer(1);
+		else if(metadata == 4) return new TileEntityUniversalElectricityConsumer(2);
+		else if(metadata == 5) return new TileEntityUniversalElectricityProducer(2);
 		
 		return createNewTileEntity(world);
 	}

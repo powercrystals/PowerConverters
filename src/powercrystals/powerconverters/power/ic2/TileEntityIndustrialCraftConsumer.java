@@ -18,10 +18,15 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	private long _lastTickInjected;
 	private int _voltageMax;
 	
-	public TileEntityIndustrialCraftConsumer(int voltageIndex, int voltageMax)
+	public TileEntityIndustrialCraftConsumer()
+	{
+		this(0);
+	}
+	
+	public TileEntityIndustrialCraftConsumer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyEmitter.class);
-		_voltageMax = Integer.MAX_VALUE;
+		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 	
 	@Override
@@ -104,6 +109,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	@Override
 	public int getMaxSafeInput()
 	{
+		if(_voltageIndex == 3) return Integer.MAX_VALUE;
 		return _voltageMax;
 	}
 

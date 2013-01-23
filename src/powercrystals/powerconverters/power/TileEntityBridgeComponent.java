@@ -3,6 +3,7 @@ package powercrystals.powerconverters.power;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import powercrystals.core.position.BlockPosition;
@@ -16,14 +17,14 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	
 	private Class<?> _adjacentClass;
 	private PowerSystem _powerSystem;
-	private int _voltagenameIndex;
+	protected int _voltageIndex;
 
 	private boolean _initialized;
 	
 	protected TileEntityBridgeComponent(PowerSystem powersystem, int voltageNameIndex, Class<T> adjacentClass)
 	{
 		_powerSystem = powersystem;
-		_voltagenameIndex = voltageNameIndex;
+		_voltageIndex = voltageNameIndex;
 		_adjacentClass = adjacentClass;
 	}
 	
@@ -86,7 +87,7 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	
 	public int getVoltageNameIndex()
 	{
-		return _voltagenameIndex;
+		return _voltageIndex;
 	}
 	
 	public TileEntityEnergyBridge getFirstBridge()
@@ -102,5 +103,25 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	protected Map<ForgeDirection, T> getTiles()
 	{
 		return _adjacentTiles;
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound tagCompound)
+	{
+		super.readFromNBT(tagCompound);
+		if(getPowerSystem().getVoltageValues() != null && _voltageIndex == 0)
+		{
+			_voltageIndex = tagCompound.getInteger("voltageIndex");
+		}
+	}
+	
+	@Override
+	public void writeToNBT(NBTTagCompound tagCompound)
+	{
+		super.writeToNBT(tagCompound);
+		if(getPowerSystem().getVoltageValues() != null)
+		{
+			tagCompound.setInteger("voltageIndex", _voltageIndex);
+		}
 	}
 }
