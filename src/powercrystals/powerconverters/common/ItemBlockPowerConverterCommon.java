@@ -32,6 +32,7 @@ public class ItemBlockPowerConverterCommon extends ItemBlock
 	{
 		int md = itemstack.getItemDamage();
 		if(md == 0) return "energyBridge";
+		if(md == 2) return "energyCharger";
 		return "unknown";
 	}
 	
@@ -39,9 +40,7 @@ public class ItemBlockPowerConverterCommon extends ItemBlock
 	@Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (int i = 0; i <= 0; i++)
-        {
-            par3List.add(new ItemStack(par1, 1, i));
-        }
+        par3List.add(new ItemStack(par1, 1, 0));
+        par3List.add(new ItemStack(par1, 1, 2));
     }
 }

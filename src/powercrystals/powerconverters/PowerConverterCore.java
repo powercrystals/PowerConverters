@@ -4,6 +4,7 @@ import powercrystals.core.updater.IUpdateableMod;
 import powercrystals.core.updater.UpdateManager;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
 import powercrystals.powerconverters.common.ItemBlockPowerConverterCommon;
+import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.gui.PCGUIHandler;
 import powercrystals.powerconverters.net.ClientPacketHandler;
@@ -56,7 +57,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, version = PowerConverterCore.version,
-dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:IC2;after:Railcraft")
+dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:IC2;after:Railcraft;after:ThermalExpansion|Energy")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false,
 clientPacketHandlerSpec = @SidedPacketHandler(channels = { "PowerConverters" }, packetHandler = ClientPacketHandler.class),
 connectionHandler = ConnectionHandler.class)
@@ -64,7 +65,7 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.1.0B1";
+	public static final String version = "1.4.6R2.1.0B3";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -120,7 +121,9 @@ public class PowerConverterCore implements IUpdateableMod
 		converterBlockCommon = new BlockPowerConverterCommon(blockIdCommon.getInt());
 		GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "blockPowerConverterCommon");
 		GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
+		GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 		LanguageRegistry.addName(new ItemStack(converterBlockCommon, 1, 0), "Energy Bridge");
+		LanguageRegistry.addName(new ItemStack(converterBlockCommon, 1, 2), "Universal Charger");
 		
 		GameRegistry.addRecipe(new ItemStack(converterBlockCommon, 1, 0),
 				"GRG", "LDL", "GRG",
@@ -129,7 +132,14 @@ public class PowerConverterCore implements IUpdateableMod
 				Character.valueOf('L'), Block.glass,
 				Character.valueOf('D'), Item.diamond);
 		
-		if(Loader.isModLoaded("BuildCraft|Energy"))
+		GameRegistry.addRecipe(new ItemStack(converterBlockCommon, 1, 2),
+				"GRG", "ICI", "GRG",
+				Character.valueOf('G'), Item.ingotGold,
+				Character.valueOf('R'), Item.redstone,
+				Character.valueOf('I'), Item.ingotIron,
+				Character.valueOf('C'), Block.chest);
+		
+		if(Loader.isModLoaded("BuildCraft|Energy") || Loader.isModLoaded("ThermalExpansion|Energy"))
 		{
 			converterBlockBuildCraft = new BlockPowerConverterBuildCraft(blockIdBuildCraft.getInt());
 			GameRegistry.registerBlock(converterBlockBuildCraft, ItemBlockPowerConverterBuildCraft.class, "blockPowerConverterBuildCraft");
@@ -138,10 +148,20 @@ public class PowerConverterCore implements IUpdateableMod
 			LanguageRegistry.addName(new ItemStack(converterBlockBuildCraft, 1, 0), "BC Consumer");
 			LanguageRegistry.addName(new ItemStack(converterBlockBuildCraft, 1, 1), "BC Producer");
 			
-			GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
-					"G G", " E ", "G G",
-					Character.valueOf('G'), Item.ingotGold,
-					Character.valueOf('E'), new ItemStack((Block)(Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null)), 1, 1));
+			if(Loader.isModLoaded("BuildCraft|Energy"))
+			{
+				GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
+						"G G", " E ", "G G",
+						Character.valueOf('G'), Item.ingotGold,
+						Character.valueOf('E'), new ItemStack((Block)(Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null)), 1, 1));
+			}
+			if(Loader.isModLoaded("ThermalExpansion|Energy"))
+			{
+				GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
+						"G G", " E ", "G G",
+						Character.valueOf('G'), Item.ingotGold,
+						Character.valueOf('E'), (ItemStack)(Class.forName("thermalexpansion.ThermalExpansionEnergy").getField("engineSteam").get(null)));
+			}
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockBuildCraft, 1, 1), new ItemStack(converterBlockBuildCraft, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockBuildCraft, 1, 0), new ItemStack(converterBlockBuildCraft, 1, 1));

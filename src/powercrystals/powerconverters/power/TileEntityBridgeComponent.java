@@ -16,7 +16,7 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	private Map<ForgeDirection, T> _adjacentTiles = new HashMap<ForgeDirection, T>();
 	
 	private Class<?> _adjacentClass;
-	private PowerSystem _powerSystem;
+	protected PowerSystem _powerSystem;
 	protected int _voltageIndex;
 
 	private boolean _initialized;
