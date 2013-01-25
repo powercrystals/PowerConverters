@@ -18,7 +18,6 @@ import universalelectricity.core.implement.IVoltage;
 public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyConsumer<IConductor> implements IVoltage
 {
 	private int _wattsLastTick;
-	private int _voltageMax;
 	
 	public TileEntityUniversalElectricityConsumer()
 	{
@@ -29,7 +28,6 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	{
 		super(PowerConverterCore.powerSystemUniversalElectricity, voltageIndex, IConductor.class);
 		ElectricityConnections.registerConnector(this, EnumSet.range(ForgeDirection.DOWN, ForgeDirection.EAST));
-		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 	
 	@Override
@@ -77,7 +75,7 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	@Override
 	public double getVoltage()
 	{
-		return _voltageMax;
+		return getPowerSystem().getVoltageValues()[getVoltageIndex()];
 	}
 
 	@Override

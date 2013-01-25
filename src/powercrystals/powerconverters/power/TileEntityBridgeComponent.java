@@ -85,7 +85,7 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 		return te != null && _adjacentClass.isAssignableFrom(te.getClass());
 	}
 	
-	public int getVoltageNameIndex()
+	public int getVoltageIndex()
 	{
 		return _voltageIndex;
 	}

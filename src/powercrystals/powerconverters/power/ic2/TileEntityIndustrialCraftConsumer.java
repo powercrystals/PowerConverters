@@ -16,7 +16,6 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	private boolean _didFirstAddToNet;
 	private int _euLastTick;
 	private long _lastTickInjected;
-	private int _voltageMax;
 	
 	public TileEntityIndustrialCraftConsumer()
 	{
@@ -26,14 +25,13 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	public TileEntityIndustrialCraftConsumer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyEmitter.class);
-		_voltageMax = getPowerSystem().getVoltageValues()[voltageIndex];
 	}
 	
 	@Override
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(!_didFirstAddToNet)
+		if(!_didFirstAddToNet && !tileEntityInvalid)
 		{
 			MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
 			_didFirstAddToNet = true;
@@ -109,8 +107,8 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	@Override
 	public int getMaxSafeInput()
 	{
-		if(_voltageIndex == 3) return Integer.MAX_VALUE;
-		return _voltageMax;
+		if(getVoltageIndex() == 3) return Integer.MAX_VALUE;
+		return getPowerSystem().getVoltageValues()[getVoltageIndex()];
 	}
 
 	@Override

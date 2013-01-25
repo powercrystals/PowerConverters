@@ -41,7 +41,7 @@ public class TileEntityRailCraftConsumer extends TileEntityEnergyConsumer<ITankC
 	}
 	
 	@Override
-	public int getVoltageNameIndex()
+	public int getVoltageIndex()
 	{
 		return 0;
 	}
