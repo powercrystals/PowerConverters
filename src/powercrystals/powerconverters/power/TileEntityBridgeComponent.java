@@ -109,7 +109,7 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	public void readFromNBT(NBTTagCompound tagCompound)
 	{
 		super.readFromNBT(tagCompound);
-		if(getPowerSystem().getVoltageValues() != null && _voltageIndex == 0)
+		if(_voltageIndex == 0)
 		{
 			_voltageIndex = tagCompound.getInteger("voltageIndex");
 		}
@@ -119,9 +119,6 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	public void writeToNBT(NBTTagCompound tagCompound)
 	{
 		super.writeToNBT(tagCompound);
-		if(getPowerSystem().getVoltageValues() != null)
-		{
-			tagCompound.setInteger("voltageIndex", _voltageIndex);
-		}
+		tagCompound.setInteger("voltageIndex", _voltageIndex);
 	}
 }

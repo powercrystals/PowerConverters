@@ -48,32 +48,39 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 	@Override
 	public int produceEnergy(int energy)
 	{
-		if(_player != null)
-		{
-			energy = chargeInventory(_player.inventory, ForgeDirection.UNKNOWN, energy);
-		}
-		
-		if(energy <= 0)
+		if(energy == 0)
 		{
 			return 0;
 		}
 		
+		int energyRemaining = energy;
+		if(_player != null)
+		{
+			energyRemaining = chargeInventory(_player.inventory, ForgeDirection.UNKNOWN, energyRemaining);
+		}
+		
+		if(energyRemaining < energy)
+		{
+			return energyRemaining;
+		}
+		
 		for(Entry<ForgeDirection, IInventory> inv : getTiles().entrySet())
 		{
-			energy = chargeInventory(inv.getValue(), inv.getKey(), energy);
-			if(energy <= 0)
+			energyRemaining = chargeInventory(inv.getValue(), inv.getKey(), energyRemaining);
+			if(energyRemaining < energy)
 			{
-				return 0;
+				return energyRemaining;
 			}
 		}
 		
-		return energy;
+		return energyRemaining;
 	}
 	
 	private int chargeInventory(IInventory inventory, ForgeDirection toSide, int energy)
 	{
 		int invStart = 0;
 		int invEnd = inventory.getSizeInventory();
+		int energyRemaining = energy;
 		
 		if(toSide != ForgeDirection.UNKNOWN && inventory instanceof ISidedInventory)
 		{
@@ -94,16 +101,16 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 				if(chargeHandler.canHandle(s))
 				{
 					_powerSystem = chargeHandler.getPowerSystem();
-					energy = chargeHandler.charge(s, energy);
-					if(energy <= 0)
+					energyRemaining = chargeHandler.charge(s, energyRemaining);
+					if(energyRemaining < energy)
 					{
-						return 0;
+						return energyRemaining;
 					}
 				}
 			}
 		}
 		
-		return energy;
+		return energyRemaining;
 	}
 	
 	public void setPlayer(EntityPlayer player)

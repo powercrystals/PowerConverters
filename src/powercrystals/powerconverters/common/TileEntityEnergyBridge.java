@@ -81,6 +81,10 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
 				if(energyRemaining > 0)
 				{
 					energyNotProduced = prod.getValue().produceEnergy(energyRemaining);
+					if(energyNotProduced > energyRemaining)
+					{
+						energyNotProduced = energyRemaining;
+					}
 					_producerOutputRates.put(prod.getKey(), (energyRemaining - energyNotProduced) / prod.getValue().getPowerSystem().getInternalEnergyPerOutput());
 					energyRemaining = energyNotProduced;
 				}
