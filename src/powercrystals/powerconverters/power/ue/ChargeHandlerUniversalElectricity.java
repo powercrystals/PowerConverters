@@ -6,8 +6,8 @@ import net.minecraft.util.MathHelper;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.IChargeHandler;
 import powercrystals.powerconverters.power.PowerSystem;
+import universalelectricity.core.electricity.ElectricInfo;
 import universalelectricity.core.implement.IItemElectric;
-import universalelectricity.core.implement.IVoltage;
 
 public class ChargeHandlerUniversalElectricity implements IChargeHandler
 {
@@ -32,11 +32,11 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 			return 0;
 		}
 		
-		double voltage = ((IVoltage)item).getVoltage(stack); // is this correct? WHO KNOWS
-		double watts = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
-		double amps = watts / voltage;
+		double joulesInput = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
 		
-		double joulesRemaining = item.onReceive(amps, voltage, stack);
+		double ampsToGive = Math.min(ElectricInfo.getAmps(Math.min(item.getMaxJoules(stack) * 0.005, joulesInput), 120), joulesInput);
+		double joules = item.onReceive(ampsToGive, 120, stack);
+		double joulesRemaining = joulesInput - (ElectricInfo.getJoules(ampsToGive, 120, 1) - joules);
 		
 		int energyRemaining = MathHelper.floor_double(joulesRemaining * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
 		

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import cpw.mods.fml.common.Loader;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,25 +11,20 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
-import powercrystals.powerconverters.power.ic2.ChargeHandlerIndustrialCraft;
 
 public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 {
-	private List<IChargeHandler> _chargeHandlers;
+	private static List<IChargeHandler> _chargeHandlers = new ArrayList<IChargeHandler>();
 	private EntityPlayer _player;
+	
+	public static void registerChargeHandler(IChargeHandler handler)
+	{
+		_chargeHandlers.add(handler);
+	}
 	
 	public TileEntityCharger()
 	{
 		super(PowerConverterCore.powerSystemIndustrialCraft, 0, IInventory.class);
-		_chargeHandlers = new ArrayList<IChargeHandler>();
-		if(Loader.isModLoaded("IC2"))
-		{
-			_chargeHandlers.add(new ChargeHandlerIndustrialCraft());
-		}
-		//if(Loader.isModLoaded("BasicComponents"))
-		//{
-		//	_chargeHandlers.add(new ChargeHandlerUniversalElectricity());
-		//}
 	}
 
 	@Override
@@ -103,7 +96,6 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 					if(energyRemaining < energy)
 					{
 						_powerSystem = chargeHandler.getPowerSystem();
-						System.out.println("Power System set to " + getPowerSystem().getName());
 						return energyRemaining;
 					}
 				}

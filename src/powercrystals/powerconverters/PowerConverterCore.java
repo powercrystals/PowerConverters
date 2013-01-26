@@ -16,6 +16,7 @@ import powercrystals.powerconverters.power.buildcraft.ItemBlockPowerConverterBui
 import powercrystals.powerconverters.power.buildcraft.TileEntityBuildCraftConsumer;
 import powercrystals.powerconverters.power.buildcraft.TileEntityBuildCraftProducer;
 import powercrystals.powerconverters.power.ic2.BlockPowerConverterIndustrialCraft;
+import powercrystals.powerconverters.power.ic2.ChargeHandlerIndustrialCraft;
 import powercrystals.powerconverters.power.ic2.ItemBlockPowerConverterIndustrialCraft;
 import powercrystals.powerconverters.power.ic2.TileEntityIndustrialCraftConsumer;
 import powercrystals.powerconverters.power.ic2.TileEntityIndustrialCraftProducer;
@@ -24,6 +25,7 @@ import powercrystals.powerconverters.power.railcraft.ItemBlockPowerConverterRail
 import powercrystals.powerconverters.power.railcraft.TileEntityRailCraftConsumer;
 import powercrystals.powerconverters.power.railcraft.TileEntityRailCraftProducer;
 import powercrystals.powerconverters.power.ue.BlockPowerConverterUniversalElectricity;
+import powercrystals.powerconverters.power.ue.ChargeHandlerUniversalElectricity;
 import powercrystals.powerconverters.power.ue.ItemBlockPowerConverterUniversalElectricty;
 import powercrystals.powerconverters.power.ue.TileEntityUniversalElectricityConsumer;
 import powercrystals.powerconverters.power.ue.TileEntityUniversalElectricityProducer;
@@ -65,7 +67,7 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.1.0B6";
+	public static final String version = "1.4.6R2.1.0RC1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -207,6 +209,8 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockIndustrialCraft, 1, 4), new ItemStack(converterBlockIndustrialCraft, 1, 5));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockIndustrialCraft, 1, 7), new ItemStack(converterBlockIndustrialCraft, 1, 6));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockIndustrialCraft, 1, 6), new ItemStack(converterBlockIndustrialCraft, 1, 7));
+			
+			TileEntityCharger.registerChargeHandler(new ChargeHandlerIndustrialCraft());
 		}
 		
 		if(Loader.isModLoaded("Railcraft"))
@@ -241,8 +245,8 @@ public class PowerConverterCore implements IUpdateableMod
 			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 5), "UE HV Producer");
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
-					"I I", " B ", "I I",
-					Character.valueOf('I'), Item.ingotIron,
+					"I I", "   ", "IBI",
+					Character.valueOf('I'), Item.ingotGold,
 					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
@@ -251,8 +255,8 @@ public class PowerConverterCore implements IUpdateableMod
 					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
-					"I I", " B ", "I I",
-					Character.valueOf('I'), Item.diamond,
+					"IBI", "   ", "I I",
+					Character.valueOf('I'), Item.ingotGold,
 					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
@@ -261,6 +265,8 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2), new ItemStack(converterBlockUniversalElectricity, 1, 3));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 5), new ItemStack(converterBlockUniversalElectricity, 1, 4));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4), new ItemStack(converterBlockUniversalElectricity, 1, 5));
+			
+			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
