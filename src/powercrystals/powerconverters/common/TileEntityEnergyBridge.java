@@ -74,7 +74,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
 
 		if(!worldObj.isRemote)
 		{
-			int energyRemaining = _energyStored;
+			int energyRemaining = Math.min(_energyStored, _energyStoredMax);
 			int energyNotProduced = 0;
 			for(Entry<ForgeDirection, TileEntityEnergyProducer<?>> prod : _producerTiles.entrySet())
 			{

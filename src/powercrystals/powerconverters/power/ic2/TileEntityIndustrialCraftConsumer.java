@@ -31,7 +31,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(!_didFirstAddToNet && !tileEntityInvalid)
+		if(!_didFirstAddToNet && !worldObj.isRemote)
 		{
 			MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
 			_didFirstAddToNet = true;
@@ -59,8 +59,11 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	{
 		if(_isAddedToEnergyNet)
 		{
+			if(!worldObj.isRemote)
+			{
+				MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+			}
 			_isAddedToEnergyNet = false;
-			MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
 		}
 		super.invalidate();
 	}
