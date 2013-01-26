@@ -73,7 +73,7 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	}
 
 	@Override
-	public double getVoltage()
+	public double getVoltage(Object... data)
 	{
 		return getPowerSystem().getVoltageValues()[getVoltageIndex()];
 	}

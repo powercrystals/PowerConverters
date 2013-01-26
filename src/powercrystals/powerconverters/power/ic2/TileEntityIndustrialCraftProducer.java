@@ -30,7 +30,7 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(!_didFirstAddToNet)
+		if(!_didFirstAddToNet && !tileEntityInvalid)
 		{
 			MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
 			_didFirstAddToNet = true;

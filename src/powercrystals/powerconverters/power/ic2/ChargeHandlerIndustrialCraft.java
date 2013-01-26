@@ -19,7 +19,11 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler
 	@Override
 	public boolean canHandle(ItemStack stack)
 	{
-		return stack != null && Item.itemsList[stack.itemID] instanceof IElectricItem;
+		if(stack == null || Item.itemsList[stack.itemID] == null || !(Item.itemsList[stack.itemID] instanceof IElectricItem))
+		{
+			return false;
+		}
+		return true;
 	}
 
 	@Override

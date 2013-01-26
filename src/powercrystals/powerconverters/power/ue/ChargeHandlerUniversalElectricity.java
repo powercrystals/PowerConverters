@@ -20,7 +20,7 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 	@Override
 	public boolean canHandle(ItemStack stack)
 	{
-		return stack != null && Item.itemsList[stack.itemID] instanceof IItemElectric;
+		return stack != null && Item.itemsList[stack.itemID] != null && Item.itemsList[stack.itemID] instanceof IItemElectric;
 	}
 
 	@Override
@@ -32,13 +32,15 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 			return 0;
 		}
 		
-		double voltage = ((IVoltage)item).getVoltage();
+		double voltage = ((IVoltage)item).getVoltage(stack); // is this correct? WHO KNOWS
 		double watts = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
 		double amps = watts / voltage;
 		
-		double ampsRemaining = item.onReceive(amps, voltage, stack);
+		double joulesRemaining = item.onReceive(amps, voltage, stack);
 		
-		return MathHelper.floor_double((ampsRemaining * voltage) * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
+		int energyRemaining = MathHelper.floor_double(joulesRemaining * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
+		
+		return energyRemaining;
 	}
 
 	@Override

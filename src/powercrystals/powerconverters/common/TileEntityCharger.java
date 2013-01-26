@@ -14,7 +14,6 @@ import net.minecraftforge.common.ISidedInventory;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 import powercrystals.powerconverters.power.ic2.ChargeHandlerIndustrialCraft;
-import powercrystals.powerconverters.power.ue.ChargeHandlerUniversalElectricity;
 
 public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 {
@@ -29,10 +28,10 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 		{
 			_chargeHandlers.add(new ChargeHandlerIndustrialCraft());
 		}
-		if(Loader.isModLoaded("BasicComponents"))
-		{
-			_chargeHandlers.add(new ChargeHandlerUniversalElectricity());
-		}
+		//if(Loader.isModLoaded("BasicComponents"))
+		//{
+		//	_chargeHandlers.add(new ChargeHandlerUniversalElectricity());
+		//}
 	}
 
 	@Override
@@ -100,10 +99,11 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 				
 				if(chargeHandler.canHandle(s))
 				{
-					_powerSystem = chargeHandler.getPowerSystem();
 					energyRemaining = chargeHandler.charge(s, energyRemaining);
 					if(energyRemaining < energy)
 					{
+						_powerSystem = chargeHandler.getPowerSystem();
+						System.out.println("Power System set to " + getPowerSystem().getName());
 						return energyRemaining;
 					}
 				}
