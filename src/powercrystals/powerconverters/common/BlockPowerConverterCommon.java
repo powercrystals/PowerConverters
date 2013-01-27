@@ -2,6 +2,7 @@ package powercrystals.powerconverters.common;
 
 import powercrystals.core.position.INeighboorUpdateTile;
 import powercrystals.powerconverters.PowerConverterCore;
+import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.TileEntityBridgeComponent;
 
 import net.minecraft.block.BlockContainer;
@@ -20,6 +21,7 @@ public class BlockPowerConverterCommon extends BlockContainer
 		super(i, 0, Material.clay);
 		setHardness(1.0F);
 		setBlockName("powerConverterCommon");
+		setCreativeTab(PCCreativeTab.tab);
 	}
 	
 	@Override

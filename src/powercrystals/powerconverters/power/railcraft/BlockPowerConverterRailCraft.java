@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.BlockPowerConverter;
 import powercrystals.powerconverters.power.TileEntityBridgeComponent;
 
@@ -14,6 +15,7 @@ public class BlockPowerConverterRailCraft extends BlockPowerConverter
 	{
 		super(blockId);
 		setBlockName("powerConverterIC2");
+		setCreativeTab(PCCreativeTab.tab);
 	}
 	
 	@Override

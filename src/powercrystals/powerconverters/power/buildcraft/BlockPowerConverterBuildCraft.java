@@ -2,6 +2,7 @@ package powercrystals.powerconverters.power.buildcraft;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.BlockPowerConverter;
 import powercrystals.powerconverters.power.TileEntityBridgeComponent;
 import net.minecraft.tileentity.TileEntity;
@@ -14,6 +15,7 @@ public class BlockPowerConverterBuildCraft extends BlockPowerConverter
 	{
 		super(blockId);
 		setBlockName("powerConverterBC");
+		setCreativeTab(PCCreativeTab.tab);
 	}
 	
 	@Override
