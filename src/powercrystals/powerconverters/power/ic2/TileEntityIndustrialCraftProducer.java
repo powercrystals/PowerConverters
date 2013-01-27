@@ -65,6 +65,11 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	@Override
 	public int produceEnergy(int energy)
 	{
+		if(!_isAddedToEnergyNet)
+		{
+			return energy;
+		}
+		
 		int eu = energy / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
 		if(eu < getMaxEnergyOutput())
 		{

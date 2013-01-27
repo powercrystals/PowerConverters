@@ -16,7 +16,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	{
 		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
 		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
-		_powerProvider.configure(25, 10, 10, 1, 1000);
+		_powerProvider.configure(25, 2, 100, 1, 1000);
 	}
 	
 	@Override

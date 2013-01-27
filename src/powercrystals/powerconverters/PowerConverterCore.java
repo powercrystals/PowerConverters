@@ -67,7 +67,7 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.1.0";
+	public static final String version = "1.4.6R2.1.1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
