@@ -49,9 +49,9 @@ public class ContainerEnergyBridge extends Container
 	}
 	
 	@Override
-	public void updateCraftingResults()
+	public void detectAndSendChanges()
 	{
-		super.updateCraftingResults();
+		super.detectAndSendChanges();
 		for(int side = 0; side < 6; side++)
 		{
 			ForgeDirection d = ForgeDirection.getOrientation(side);
