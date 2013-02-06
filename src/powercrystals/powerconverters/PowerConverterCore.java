@@ -37,7 +37,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
-import net.minecraftforge.event.Event;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidDictionary.LiquidRegisterEvent;
@@ -72,7 +71,7 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.1.1";
+	public static final String version = "1.4.6R2.2.0RC1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -87,7 +86,7 @@ public class PowerConverterCore implements IUpdateableMod
 	public static Block converterBlockIndustrialCraft;
 	public static Block converterBlockSteam;
 	public static Block converterBlockUniversalElectricity;
-        public static Block converterBlockFactorization;
+	public static Block converterBlockFactorization;
 	
 	public static PowerConverterCore instance;
 	
@@ -96,13 +95,13 @@ public class PowerConverterCore implements IUpdateableMod
 	private static Property blockIdIndustrialCraft;
 	private static Property blockIdSteam;
 	private static Property blockIdUniversalElectricty;
-        private static Property blockIdFactorization;
+	private static Property blockIdFactorization;
 	
 	public static PowerSystem powerSystemBuildCraft;
 	public static PowerSystem powerSystemIndustrialCraft;
 	public static PowerSystem powerSystemSteam;
 	public static PowerSystem powerSystemUniversalElectricity;
-        public static PowerSystem powerSystemFactorization;
+	public static PowerSystem powerSystemFactorization;
 	
 	public static int steamId = -1;
 
@@ -114,12 +113,12 @@ public class PowerConverterCore implements IUpdateableMod
 		powerSystemSteam = new PowerSystem("Steam", "STEAM", 875, 875, null, null, "mB/t");
 		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV" }, new int[] { 60, 120, 240 }, "W");
 		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 4375 / 3, 4375 / 3, null, null, "CG/t");
-                
+				
 		PowerSystem.registerPowerSystem(powerSystemBuildCraft);
 		PowerSystem.registerPowerSystem(powerSystemIndustrialCraft);
 		PowerSystem.registerPowerSystem(powerSystemSteam);
 		PowerSystem.registerPowerSystem(powerSystemUniversalElectricity);
-                PowerSystem.registerPowerSystem(powerSystemFactorization);
+				PowerSystem.registerPowerSystem(powerSystemFactorization);
 		
 		Configuration c = new Configuration(evt.getSuggestedConfigurationFile());
 		loadConfig(c);
@@ -278,15 +277,17 @@ public class PowerConverterCore implements IUpdateableMod
 			
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
-                if (Loader.isModLoaded("factorization")){
-                    converterBlockFactorization = new BlockPowerConverterFactorization(blockIdFactorization.getInt());
-                    GameRegistry.registerBlock(converterBlockFactorization, ItemBlockPowerConverterFactorization.class, "blockPowerConverterFZ");
-                    GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
-                    LanguageRegistry.addName(new ItemStack(converterBlockFactorization,1,0), "FZ Consumer");
-                    
-                    GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationProducer.class, "powerConverterFZProducer");
-                    LanguageRegistry.addName(new ItemStack(converterBlockFactorization,1,1), "FZ Producer");
-                }
+
+		if (Loader.isModLoaded("factorization"))
+		{
+			converterBlockFactorization = new BlockPowerConverterFactorization(blockIdFactorization.getInt());
+			GameRegistry.registerBlock(converterBlockFactorization, ItemBlockPowerConverterFactorization.class, "blockPowerConverterFZ");
+			GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 0), "FZ Consumer");
+			
+			GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationProducer.class, "powerConverterFZProducer");
+			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 1), "FZ Producer");
+		}
 		
 		NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
 		
@@ -324,7 +325,7 @@ public class PowerConverterCore implements IUpdateableMod
 		blockIdSteam = c.getBlock("ID.BlockSteam", 2853);
 		blockIdUniversalElectricty = c.getBlock("ID.BlockUniversalElectricty", 2854);
 		blockIdFactorization = c.getBlock("ID.BlockFactorization", 2855);
-                
+		
 		PowerSystem.loadConfig(c);
 		
 		c.save();
