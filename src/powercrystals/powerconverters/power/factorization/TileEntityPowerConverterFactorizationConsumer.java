@@ -10,7 +10,7 @@ import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 public class TileEntityPowerConverterFactorizationConsumer extends TileEntityEnergyConsumer<IChargeConductor> implements IChargeConductor
 {
 	private Charge _charge = new Charge(this);
-	private int _chargeLasTtick = 0;
+	private int _chargeLastTick = 0;
 	private static final int _maxCG = 1000;
 
 	public TileEntityPowerConverterFactorizationConsumer()
@@ -22,26 +22,32 @@ public class TileEntityPowerConverterFactorizationConsumer extends TileEntityEne
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if (this._charge.getValue() < _maxCG)
+		if(worldObj.isRemote)
+		{
+			return;
+		}
+		
+		if(this._charge.getValue() < _maxCG)
 		{
 			this._charge.update();
 		}
-		if (this._charge.getValue() > 0)
+		
+		if(this._charge.getValue() > 0)
 		{
-			int used = this._charge.tryTake(this._charge.getValue());
-			this._chargeLasTtick = MathHelper.floor_float(used);
-			this.storeEnergy((int) (used * PowerConverterCore.powerSystemFactorization.getInternalEnergyPerInput()));
+			int used = _charge.tryTake(_charge.getValue());
+			_chargeLastTick = MathHelper.floor_float(used);
+			storeEnergy((int) (used * PowerConverterCore.powerSystemFactorization.getInternalEnergyPerInput()));
 		}
 		else
 		{
-			this._chargeLasTtick = 0;
+			this._chargeLastTick = 0;
 		}
 	}
 
 	@Override
 	public int getInputRate()
 	{
-		return this._chargeLasTtick;
+		return this._chargeLastTick;
 	}
 
 	@Override

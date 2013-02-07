@@ -35,8 +35,8 @@ public class BlockPowerConverterFactorization extends BlockPowerConverter
 	@Override
 	public int getBlockTextureFromSideAndMetadata(int side, int metadata)
 	{
-		if(metadata == 0) return 42;
-		else if(metadata == 1) return 43;
+		if(metadata == 0) return 40;
+		else if(metadata == 1) return 42;
 		return 0;
 	}
 }

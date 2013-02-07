@@ -21,22 +21,25 @@ public class TileEntityPowerConverterFactorizationProducer extends TileEntityEne
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int CG = energy / PowerConverterCore.powerSystemFactorization.getInternalEnergyPerInput();
-		for (Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet())
+		int CG = energy / PowerConverterCore.powerSystemFactorization.getInternalEnergyPerOutput();
+		for(Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet())
 		{
 			IChargeConductor o = output.getValue();
-			if (o != null)
+			if(o != null)
 			{
-				if (o.getCharge().getValue() < _maxCG)
+				if(o.getCharge().getValue() < _maxCG)
 				{
-					int store = o.getCharge().getValue();
-					int rem = o.getCharge().addValue(CG);
-					rem -= store;
-					return rem * PowerConverterCore.powerSystemFactorization.getInternalEnergyPerInput();
+					int store = Math.min(_maxCG - o.getCharge().getValue(), CG);
+					o.getCharge().addValue(store);
+					CG -= store;
+					if(CG <= 0)
+					{
+						break;
+					}
 				}
 			}
 		}
-		return energy;
+		return CG * PowerConverterCore.powerSystemFactorization.getInternalEnergyPerOutput();
 	}
 
 	@Override
