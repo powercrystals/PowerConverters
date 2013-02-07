@@ -63,7 +63,7 @@ import powercrystals.powerconverters.power.factorization.TileEntityPowerConverte
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationProducer;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, version = PowerConverterCore.version,
-dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:IC2;after:Railcraft;after:ThermalExpansion|Energy")
+dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion|Energy")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false,
 clientPacketHandlerSpec = @SidedPacketHandler(channels = { "PowerConverters" }, packetHandler = ClientPacketHandler.class),
 connectionHandler = ConnectionHandler.class)
@@ -287,15 +287,25 @@ public class PowerConverterCore implements IUpdateableMod
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
 
-		if (Loader.isModLoaded("factorization"))
+		if(Loader.isModLoaded("factorization"))
 		{
 			converterBlockFactorization = new BlockPowerConverterFactorization(blockIdFactorization.getInt());
 			GameRegistry.registerBlock(converterBlockFactorization, ItemBlockPowerConverterFactorization.class, "blockPowerConverterFZ");
 			GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 0), "FZ Consumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 0), "Factorization Consumer");
 			
 			GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationProducer.class, "powerConverterFZProducer");
-			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 1), "FZ Producer");
+			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 1), "Factorization Producer");
+			
+			Object fzRegistry = Class.forName("factorization.common.Core").getField("registry").get(null);
+			
+			GameRegistry.addRecipe(new ItemStack(converterBlockFactorization, 1, 0),
+					"I I", " B ", "I I",
+					Character.valueOf('I'), Item.ingotGold,
+					Character.valueOf('B'), (ItemStack)(Class.forName("factorization.common.Registry").getField("solar_turbine_item").get(fzRegistry)));
+			
+			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockFactorization, 1, 1), new ItemStack(converterBlockFactorization, 1, 0));
+			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockFactorization, 1, 0), new ItemStack(converterBlockFactorization, 1, 1));
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
@@ -310,11 +320,6 @@ public class PowerConverterCore implements IUpdateableMod
 		proxy.load();
 		
 		TickRegistry.registerScheduledTickHandler((IScheduledTickHandler)new UpdateManager(this), Side.CLIENT);
-	}
-
-	@PostInit
-	public void afterModsLoaded(FMLPostInitializationEvent evt)
-	{
 	}
 	
 	@ForgeSubscribe
