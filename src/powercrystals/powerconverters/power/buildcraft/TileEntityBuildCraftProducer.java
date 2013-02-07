@@ -23,7 +23,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int mj = energy / PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
+		int mj = energy / PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerOutput();
 		
 		for(Entry<ForgeDirection, IPowerReceptor> output : getTiles().entrySet())
 		{
@@ -33,7 +33,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 				int energyUsed = Math.min(Math.min(pp.getMaxEnergyReceived(), mj), pp.getMaxEnergyStored() - (int)Math.floor(pp.getEnergyStored()));
 				pp.receiveEnergy(energyUsed, output.getKey());
 				
-				energy -= energyUsed * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
+				energy -= energyUsed * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerOutput();
 				if(energy <= 0)
 				{
 					return 0;
