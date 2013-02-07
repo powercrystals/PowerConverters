@@ -35,6 +35,8 @@ public class BlockPowerConverterUniversalElectricity extends BlockPowerConverter
 		if(metadata == 3) return 32;
 		if(metadata == 4) return 34;
 		if(metadata == 5) return 36;
+		if(metadata == 6) return 44;
+		if(metadata == 7) return 46;
 		return 0;
 	}
 	
@@ -47,6 +49,8 @@ public class BlockPowerConverterUniversalElectricity extends BlockPowerConverter
 		else if(metadata == 3) return new TileEntityUniversalElectricityProducer(1);
 		else if(metadata == 4) return new TileEntityUniversalElectricityConsumer(2);
 		else if(metadata == 5) return new TileEntityUniversalElectricityProducer(2);
+		else if(metadata == 6) return new TileEntityUniversalElectricityConsumer(3);
+		else if(metadata == 7) return new TileEntityUniversalElectricityProducer(3);
 		
 		return createNewTileEntity(world);
 	}

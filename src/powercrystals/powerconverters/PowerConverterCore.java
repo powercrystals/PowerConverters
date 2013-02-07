@@ -111,7 +111,7 @@ public class PowerConverterCore implements IUpdateableMod
 		powerSystemBuildCraft = new PowerSystem("BuildCraft", "BC", 4375, 4375, null, null, "MJ/t");
 		powerSystemIndustrialCraft = new PowerSystem("IndustrialCraft", "IC2", 1800, 1800, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 32, 128, 512, 2048 }, "EU/t");
 		powerSystemSteam = new PowerSystem("Steam", "STEAM", 875, 875, null, null, "mB/t");
-		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV" }, new int[] { 60, 120, 240 }, "W");
+		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 60, 120, 240, 480 }, "W");
 		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 4375 / 3, 4375 / 3, null, null, "CG/t");
 				
 		PowerSystem.registerPowerSystem(powerSystemBuildCraft);
@@ -246,12 +246,14 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, "blockPowerConverterUniversalElectricity");
 			GameRegistry.registerTileEntity(TileEntityUniversalElectricityConsumer.class, "powerConverterUEConsumer");
 			GameRegistry.registerTileEntity(TileEntityUniversalElectricityProducer.class, "powerConverterUEProducer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 0), "UE LV Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 1), "UE LV Producer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 2), "UE MV Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 3), "UE MV Producer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 4), "UE HV Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 5), "UE HV Producer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 0), "UE 60V Consumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 1), "UE 60V Producer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 2), "UE 120V Consumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 3), "UE 120V Producer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 4), "UE 240V Consumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 5), "UE 240V Producer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 6), "UE 480V Consumer");
+			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 7), "UE 480V Producer");
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
 					"I I", "   ", "IBI",
@@ -268,12 +270,19 @@ public class PowerConverterCore implements IUpdateableMod
 					Character.valueOf('I'), Item.ingotGold,
 					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
+			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
+					"IBI", "I I", "I I",
+					Character.valueOf('I'), Item.ingotGold,
+					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
+			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0), new ItemStack(converterBlockUniversalElectricity, 1, 1));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 3), new ItemStack(converterBlockUniversalElectricity, 1, 2));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2), new ItemStack(converterBlockUniversalElectricity, 1, 3));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 5), new ItemStack(converterBlockUniversalElectricity, 1, 4));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4), new ItemStack(converterBlockUniversalElectricity, 1, 5));
+			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 7), new ItemStack(converterBlockUniversalElectricity, 1, 6));
+			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6), new ItemStack(converterBlockUniversalElectricity, 1, 7));
 			
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}

@@ -37,6 +37,8 @@ public class ItemBlockPowerConverterUniversalElectricty extends ItemBlock
 		if(md == 3) return "ueMVProducer";
 		if(md == 4) return "ueHVConsumer";
 		if(md == 5) return "ueHVProducer";
+		if(md == 6) return "ueEVConsumer";
+		if(md == 7) return "ueEVProducer";
 		return "unknown";
 	}
 	
@@ -44,7 +46,7 @@ public class ItemBlockPowerConverterUniversalElectricty extends ItemBlock
 	@Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (int i = 0; i <= 5; i++)
+        for (int i = 0; i <= 7; i++)
         {
             par3List.add(new ItemStack(par1, 1, i));
         }
