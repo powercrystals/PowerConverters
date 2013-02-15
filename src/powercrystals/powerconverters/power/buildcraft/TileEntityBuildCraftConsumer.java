@@ -1,11 +1,11 @@
 package powercrystals.powerconverters.power.buildcraft;
 
 import net.minecraft.util.MathHelper;
+import powercrystals.core.power.PowerProviderAdvanced;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerFramework;
 
 public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowerReceptor> implements IPowerReceptor
 {
@@ -15,7 +15,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	public TileEntityBuildCraftConsumer()
 	{
 		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
-		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
+		_powerProvider = new PowerProviderAdvanced();
 		_powerProvider.configure(25, 2, 100, 1, 1000);
 	}
 	

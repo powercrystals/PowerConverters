@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import net.minecraftforge.common.ForgeDirection;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerFramework;
+import powercrystals.core.power.PowerProviderAdvanced;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
@@ -16,7 +16,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 	public TileEntityBuildCraftProducer()
 	{
 		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
-		_powerProvider = PowerFramework.currentFramework.createPowerProvider();
+		_powerProvider = new PowerProviderAdvanced();
 		_powerProvider.configure(0, 0, 0, 0, 0);
 	}
 	
