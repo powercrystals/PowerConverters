@@ -134,6 +134,7 @@
 		<jar destfile="${dist.dir}/PowerConverters-${python.out}-${build.number}.jar" basedir="${classes.dir}"/>
 		<delete dir="${classes.dir}" />
 		<delete dir="${mcp.dir}/reobf"/>
+		<delete dir="${mcpsrc.dir}/powercrystals/powerconverters" />
 	</target>
 
 	<target name="build" depends="extract-dependencies" unless="already-compiled">
