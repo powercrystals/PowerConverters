@@ -198,7 +198,7 @@
 
 		
 		<move file="${download.dir}/codechickencore-src/codechickencore_at.cfg" todir="${forge.dir}/accesstransformers/"/>
-		<move file="$download.dir}/nei-src/nei_at.cfg" todir="${forge.dir}/accesstransformers/"/>
+		<move file="${download.dir}/nei-src/nei_at.cfg" todir="${forge.dir}/accesstransformers/"/>
 
 
 		<!-- Install forge -->
