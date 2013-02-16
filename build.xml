@@ -36,6 +36,7 @@
 			<available file="${mcpsrc.dir}/buildcraft" type="dir"/>
 			<available file="${mcpsrc.dir}/thermalexpansion" type="dir"/>
 			<available file="${mcpsrc.dir}/ic2" type="dir"/>
+			<available file="${mcpsrc.dir}/universalelectricity" type="dir"/>
 			<available file="${lib.dir}/CodeChickenCore.jar"/>
 			<available file="${lib.dir}/NotEnoughItems.jar"/>
 			<available file="${lib.dir}/Factorization.jar"/>
@@ -65,7 +66,11 @@
 		<get src="https://github.com/powercrystals/PowerCrystalsCore/archive/master.zip" dest="${download.dir}/PowerCrystalsCore-master.zip"/>
 		
 		<echo message="Downloading Factorization... " />
-		<get src="http://dl.dropbox.com/u/76265666/old/Factorization-0.7.10.jar" dest="${lib.dir}/Factorization.jar" />
+		<get src="http://porpchan.org/Factorization-0.7.10-deobf.jar" dest="${lib.dir}/Factorization-0.7.10-deobf.jar" />
+		
+		<echo message="Downloading UniversalElectricity API... " />
+		<get src="http://calclavia.com/download.php?d=ue/&f=UniversalElectricity_v1.2.6.339_api.zip" dest="${lib.dir}/ue-api.zip" />
+		
 	</target>
 
 	<target name="extract-dependencies" depends="setup-forge,get-dependencies">
@@ -89,6 +94,15 @@
 		<echo message="Extracting IC2 API... " />
 		<unzip src="${download.dir}/industrialcraft-2-api.zip" dest="${download.dir}" />
 		<move file="${download.dir}/ic2" todir="${mcpsrc.dir}" />
+		
+		<move file="${download.dir}/codechickencore-src/codechicken" todir="${mcpsrc.dir}" />
+		
+		<move file="${download.dir}/nei-src/codechicken" todir="${mcpsrc.dir}" />
+		<move file="${download.dir}/codechickencore-src/net" todir="${mcpsrc.dir}" />
+		
+		<echo message="Exctracting UniversalElectricity API... " />
+		<unzip src="${download.dir}/ue-api.zip" dest="${download.dir}/universalelectricity/" />
+		<move file="${download.dir}/universalelectricity/minecraft/universalelectricity" todir="${mcpsrc.dir}" />
 	</target>
 
 
@@ -150,8 +164,11 @@
 		</exec>
 		
 		<delete dir="${mcp.dir}/reobf/minecraft/buildcraft"/>
+		<delete dir="${mcp.dir}/reobf/minecraft/codechicken"/>
+		<delete dir="${mcp.dir}/reobf/minecraft/net"/>
 		<delete dir="${mcp.dir}/reobf/minecraft/ic2"/>
 		<delete dir="${mcp.dir}/reobf/minecraft/thermalexpansion"/>
+		<delete dir="${mcp.dir}/reobf/minecraft/universalelectricity"/>
 		<delete dir="${mcp.dir}/reobf/minecraft/powercrystals/core"/>
 		
 		<copy todir="${classes.dir}">
@@ -169,7 +186,7 @@
 		<property name="build.number" value="CUSTOM_BUILD" />
 	</target>
 
-	<target name="setup-forge" depends="download-forge,build-number-there,build-number-not-there" unless="forge.already.installed">
+	<target name="setup-forge" depends="download-nei,download-forge,build-number-there,build-number-not-there" unless="forge.already.installed">
 
 		<property name="build.full" value="${build.number}" />
 		<unzip dest="${build.dir}">
@@ -185,6 +202,9 @@
 
 		<!-- if your building on OSX these 2 should be executable -->
 
+		
+		<move file="${download.dir}/codechickencore-src/codechickencore_at.cfg" todir="${forge.dir}/accesstransformers/"/>
+		<move file="$download.dir}/nei-src/nei_at.cfg" todir="${forge.dir}/accesstransformers/"/>
 
 
 		<!-- Install forge -->
@@ -211,6 +231,22 @@
 			<fileset dir="${src.dir}/powercrystals"/>
 		</copy>
 		<copy todir="${mcpsrc.dir}" file="mcmod.info" overwrite="true"/>
+	</target>
+	
+	<target name="download-nei" unless="forge-exists">
+		<echo message="Downloading CodeChickenCore source... " />
+		<get src="http://www.chickenbones.craftsaddle.org/Files/CodeChicken/CodeChickenCore-src.jar" dest="${download.dir}/codechickencore-src.zip" />
+		
+		<echo message="Downloading NEI source... " />
+		<get src="http://www.chickenbones.craftsaddle.org/Files/NEI/NotEnoughItems-src.jar" dest="${download.dir}/nei-src.zip" />
+		
+		<echo message="Extracting CodeChickenCore source... " />
+		<unzip src="${download.dir}/codechickencore-src.zip" dest="${download.dir}/codechickencore-src/"/>
+		<!-- <move file="${download.dir}/codechickencore-src/codechickencore_at.cfg" todir="${forge.dir}/accesstransformers/"/> -->
+		
+		<echo message="Extracting NEI source... " />
+		<unzip src="${download.dir}/nei-src.zip" dest="${download.dir}/nei-src/" />
+		<!-- <move file="$download.dir}/nei-src/nei_at.cfg" todir="${forge.dir}/accesstransformers/"/> -->
 	</target>
 
 	<target name="download-forge" depends="download-ant-contrib" unless="forge-exists">
