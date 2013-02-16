@@ -92,7 +92,7 @@
 		<move file="${download.dir}/codechickencore-src/codechicken" todir="${mcpsrc.dir}" />
 		
 		<move file="${download.dir}/nei-src/codechicken" todir="${mcpsrc.dir}" />
-		<move file="${download.dir}/codechickencore-src/net" todir="${mcpsrc.dir}" />
+		<move file="${download.dir}/nei-src/net" todir="${mcpsrc.dir}" />
 		
 		<echo message="Exctracting UniversalElectricity API... " />
 		<unzip src="${download.dir}/ue-api.zip" dest="${download.dir}/universalelectricity/" />
