@@ -28,7 +28,7 @@
 	</condition>
 
 	<property name="verclass.dir" value="${mcpsrc.dir}/powercrystals/powerconverters" />
-	<property name="verclass.name" value="PowerConvertersCore.java"/>
+	<property name="verclass.name" value="PowerConverterCore.java"/>
 	
 	<condition property="have-apis">
 		<and>
