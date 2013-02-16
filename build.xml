@@ -50,12 +50,6 @@
 		<echo message="Downloading Thermal Expansion API... " />
 		<get src="https://dl.dropbox.com/u/57416963/Minecraft/ThermalExpansion/Release/ThermalExpansion-API-2.2.0.zip" dest="${download.dir}/thermalexpansion.zip" />
 		
-		<echo message="Downloading CodeChickenCore... " />
-		<get src="http://www.chickenbones.craftsaddle.org/Files/CodeChicken/CodeChickenCore%200.7.1.0.jar" dest="${lib.dir}/CodeChickenCore.jar" />
-		
-		<echo message="Downloading NotEnoughItems... " />
-		<get src="http://www.chickenbones.craftsaddle.org/Files/NEI/NotEnoughItems%201.4.5.1.jar" dest="${lib.dir}/NotEnoughItems.jar" />
-		
 		<echo message="Downloading IC2... " />
 		<get src="http://ic2api.player.to:8080/job/IC2_lf/205/artifact/packages/industrialcraft-2-api_1.113.205-lf.zip" dest="${download.dir}/industrialcraft-2-api.zip" />
 		
