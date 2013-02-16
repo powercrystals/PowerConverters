@@ -63,7 +63,7 @@
 		<get src="http://porpchan.org/Factorization-0.7.10-deobf.jar" dest="${lib.dir}/Factorization-0.7.10-deobf.jar" />
 		
 		<echo message="Downloading UniversalElectricity API... " />
-		<get src="http://calclavia.com/download.php?d=ue/&amp;f=UniversalElectricity_v1.2.6.339_api.zip" dest="${lib.dir}/ue-api.zip" />
+		<get src="http://calclavia.com/download.php?d=ue/&amp;f=UniversalElectricity_v1.2.6.339_api.zip" dest="${download.dir}/ue-api.zip" />
 		
 	</target>
 
