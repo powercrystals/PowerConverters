@@ -172,6 +172,12 @@
 		<copy todir="${classes.dir}">
 			<fileset dir="${mcp.dir}/reobf/minecraft"/>
 		</copy>
+		
+		<copy todir="${classes.dir}/powercrystals/powerconverters/textures">
+			<fileset dir="${mcpsrc.dir}/powercrystals/powerconverters/textures">
+				<include name="*.png" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="build-number-there" if="env.BUILD_NUMBER" >
