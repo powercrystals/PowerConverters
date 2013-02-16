@@ -89,10 +89,10 @@
 		<unzip src="${download.dir}/industrialcraft-2-api.zip" dest="${download.dir}" />
 		<move file="${download.dir}/ic2" todir="${mcpsrc.dir}" />
 		
-		<move file="${download.dir}/codechickencore-src/codechicken" todir="${mcpsrc.dir}" />
+		<copy file="${download.dir}/codechickencore-src/codechicken" todir="${mcpsrc.dir}" />
 		
-		<move file="${download.dir}/nei-src/codechicken" todir="${mcpsrc.dir}" />
-		<move file="${download.dir}/nei-src/net" todir="${mcpsrc.dir}" />
+		<copy file="${download.dir}/nei-src/codechicken" todir="${mcpsrc.dir}" />
+		<copy file="${download.dir}/nei-src/net" todir="${mcpsrc.dir}" />
 		
 		<echo message="Exctracting UniversalElectricity API... " />
 		<unzip src="${download.dir}/ue-api.zip" dest="${download.dir}/universalelectricity/" />
