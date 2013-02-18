@@ -172,6 +172,12 @@
 				<include name="*.png" />
 			</fileset>
 		</copy>
+		
+		<copy todir="${classes.dir}/powercrystals/powerconverters/textures/gui">
+			<fileset dir="${mcpsrc.dir}/powercrystals/powerconverters/textures/gui">
+				<include name="*.png" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="build-number-there" if="env.BUILD_NUMBER" >
