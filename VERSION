@@ -1,1 +1,1 @@
-1.4.6R2.2.0 Surprise Factorization support! You must place PC blocks after FZ blocks for it to work. Also, UE 480V connectors.
+1.4.6R2.2.1 Supports TE-without-BC properly, and built against the latest UE/Forge (339/527 at this time).
