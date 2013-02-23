@@ -238,6 +238,11 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
 		}
 		
+		if(Loader.isModLoaded("BasicComponents") || Loader.isModLoaded("mmmPowerSuits"))
+		{
+			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
+		}
+		
 		if(Loader.isModLoaded("BasicComponents"))
 		{
 			converterBlockUniversalElectricity = new BlockPowerConverterUniversalElectricity(blockIdUniversalElectricty.getInt());
@@ -281,8 +286,6 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4), new ItemStack(converterBlockUniversalElectricity, 1, 5));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 7), new ItemStack(converterBlockUniversalElectricity, 1, 6));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6), new ItemStack(converterBlockUniversalElectricity, 1, 7));
-			
-			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
 
 		if(Loader.isModLoaded("factorization"))
