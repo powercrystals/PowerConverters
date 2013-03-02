@@ -1,15 +1,15 @@
 package powercrystals.powerconverters.power.railcraft;
 
-import buildcraft.core.IMachine;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import powercrystals.core.position.BlockPosition;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
-public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankContainer> implements IMachine
+public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankContainer> implements ITankContainer
 {
 	public TileEntityRailCraftProducer()
 	{
@@ -39,28 +39,40 @@ public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankC
 
 		return steam * PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
 	}
-	
+
 	@Override
-	public boolean isActive()
+	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill)
 	{
-		return false;
+		return 0;
 	}
 
 	@Override
-	public boolean manageLiquids()
+	public int fill(int tankIndex, LiquidStack resource, boolean doFill)
 	{
-		return true;
+		return 0;
 	}
 
 	@Override
-	public boolean manageSolids()
+	public LiquidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
 	{
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean allowActions()
+	public LiquidStack drain(int tankIndex, int maxDrain, boolean doDrain)
 	{
-		return false;
+		return null;
+	}
+
+	@Override
+	public ILiquidTank[] getTanks(ForgeDirection direction)
+	{
+		return null;
+	}
+
+	@Override
+	public ILiquidTank getTank(ForgeDirection direction, LiquidStack type)
+	{
+		return null;
 	}
 }
