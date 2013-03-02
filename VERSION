@@ -1,1 +1,1 @@
-1.4.6R2.2.1 Supports TE-without-BC properly, and built against the latest UE/Forge (339/527 at this time).
+1.4.6R2.2.2 Fixed crash if Railcraft was installed but not Buildcraft
