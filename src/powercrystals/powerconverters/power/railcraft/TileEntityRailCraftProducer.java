@@ -5,15 +5,19 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.liquids.LiquidTank;
 import powercrystals.core.position.BlockPosition;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankContainer> implements ITankContainer
 {
+	private LiquidTank _tank;
+	
 	public TileEntityRailCraftProducer()
 	{
 		super(PowerConverterCore.powerSystemSteam, 0, ITankContainer.class);
+		_tank = new LiquidTank(1);
 	}
 	
 	@Override
@@ -67,12 +71,12 @@ public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankC
 	@Override
 	public ILiquidTank[] getTanks(ForgeDirection direction)
 	{
-		return null;
+		return new ILiquidTank[] { _tank };
 	}
 
 	@Override
 	public ILiquidTank getTank(ForgeDirection direction, LiquidStack type)
 	{
-		return null;
+		return _tank;
 	}
 }
