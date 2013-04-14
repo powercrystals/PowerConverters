@@ -1,5 +1,7 @@
 package powercrystals.powerconverters.common;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import powercrystals.core.position.INeighboorUpdateTile;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.gui.PCCreativeTab;
@@ -7,43 +9,73 @@ import powercrystals.powerconverters.power.TileEntityBridgeComponent;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPowerConverterCommon extends BlockContainer
 {
+	private Icon _iconBridge;
+	private Icon _iconChargerOn;
+	private Icon _iconChargerOff;
+	
 	public BlockPowerConverterCommon(int i)
 	{
-		super(i, 0, Material.clay);
+		super(i, Material.clay);
 		setHardness(1.0F);
-		setBlockName("powerConverterCommon");
+		setUnlocalizedName("powerconverters.common");
 		setCreativeTab(PCCreativeTab.tab);
 	}
 	
 	@Override
-	public int getBlockTextureFromSideAndMetadata(int side, int meta)
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister ir)
 	{
-		if(meta == 0) return 5;
-		else if(meta == 2) return 38;
-		
-		return 4;
+		_iconBridge = ir.registerIcon("powercrystals/powerconverters/" + getUnlocalizedName() + ".bridge");
+		_iconChargerOn = ir.registerIcon("powercrystals/powerconverters/" + getUnlocalizedName() + ".charger.on");
+		_iconChargerOff = ir.registerIcon("powercrystals/powerconverters/" + getUnlocalizedName() + ".charger.off");
 	}
 	
 	@Override
-    public int getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+	public Icon getBlockTextureFromSideAndMetadata(int side, int meta)
+	{
+		if(meta == 0) return _iconBridge;
+		else if(meta == 2) return _iconChargerOff;
+		
+		return null;
+	}
+	
+	@Override
+    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
     {
+		int meta = world.getBlockMetadata(x, y, z); 
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		if(te instanceof TileEntityBridgeComponent<?>)
 		{
-			int offset = ((TileEntityBridgeComponent<?>)te).isSideConnectedClient(side) ? 1 : 0;
-			return getBlockTextureFromSideAndMetadata(side, world.getBlockMetadata(x, y, z)) + offset;
+			if(meta == 0)
+			{
+				return _iconBridge;
+			}
+			else if(meta == 2)
+			{
+				boolean isConnected = ((TileEntityBridgeComponent<?>)te).isSideConnectedClient(side);
+				if(isConnected)
+				{
+					return _iconChargerOn;
+				}
+				else
+				{
+					return _iconChargerOff;
+				}
+			}
 		}
 		
-    	return getBlockTextureFromSideAndMetadata(side, world.getBlockMetadata(x, y, z));
+    	return getBlockTextureFromSideAndMetadata(side, meta);
     }
 	
 	@Override
@@ -57,7 +89,7 @@ public class BlockPowerConverterCommon extends BlockContainer
 	}
 
     @Override
-    public TileEntity createNewTileEntity(World world, int md)
+    public TileEntity createTileEntity(World world, int md)
     {
 		if(md == 0) return new TileEntityEnergyBridge();
 		if(md == 2) return new TileEntityCharger();
@@ -102,19 +134,13 @@ public class BlockPowerConverterCommon extends BlockContainer
 	}
 	
 	@Override
-	public String getTextureFile()
-	{
-		return PowerConverterCore.terrainTexture;
-	}
-	
-	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
 	{
 		int meta = world.getBlockMetadata(x, y, z);
 		if(meta == 2)
 		{
 			float shrinkAmount = 0.125F;
-			return AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(x, y, z, x + 1, y + 1 - shrinkAmount, z + 1);
+			return AxisAlignedBB.getAABBPool().getAABB(x, y, z, x + 1, y + 1 - shrinkAmount, z + 1);
 		}
 		else
 		{

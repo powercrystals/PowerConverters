@@ -61,7 +61,7 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 	}
 
 	@Override
-	public int powerRequest()
+	public int powerRequest(ForgeDirection from)
 	{
 		return 0;
 	}

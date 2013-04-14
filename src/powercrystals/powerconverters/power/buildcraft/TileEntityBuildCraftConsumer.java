@@ -1,6 +1,7 @@
 package powercrystals.powerconverters.power.buildcraft;
 
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.ForgeDirection;
 import powercrystals.core.power.PowerProviderAdvanced;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
@@ -59,7 +60,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	}
 
 	@Override
-	public int powerRequest()
+	public int powerRequest(ForgeDirection from)
 	{
 		return getTotalEnergyDemand() / PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput();
 	}

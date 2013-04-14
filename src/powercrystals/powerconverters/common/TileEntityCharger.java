@@ -8,8 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.ISidedInventory;
+import powercrystals.core.inventory.IInventoryManager;
+import powercrystals.core.inventory.InventoryManager;
 import powercrystals.powerconverters.PowerConverterCore;
+import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
@@ -70,21 +72,15 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 	
 	private int chargeInventory(IInventory inventory, ForgeDirection toSide, int energy)
 	{
-		int invStart = 0;
-		int invEnd = inventory.getSizeInventory();
+		PowerSystem nextPowerSystem = getPowerSystem();
 		int energyRemaining = energy;
 		
-		if(toSide != ForgeDirection.UNKNOWN && inventory instanceof ISidedInventory)
-		{
-			invStart = ((ISidedInventory)inventory).getStartInventorySide(toSide.getOpposite());
-			invEnd = invStart + ((ISidedInventory)inventory).getSizeInventorySide(toSide.getOpposite());
-		}
-		
-		for(int i = invStart; i < invEnd; i++)
+		IInventoryManager inv = InventoryManager.create(inventory, toSide.getOpposite());
+		for(Entry<Integer, ItemStack> contents : inv.getContents().entrySet())
 		{
 			for(IChargeHandler chargeHandler : _chargeHandlers)
 			{
-				ItemStack s = inventory.getStackInSlot(i);
+				ItemStack s = contents.getValue();
 				if(s == null)
 				{
 					continue;
@@ -95,13 +91,14 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 					energyRemaining = chargeHandler.charge(s, energyRemaining);
 					if(energyRemaining < energy)
 					{
-						_powerSystem = chargeHandler.getPowerSystem();
-						return energyRemaining;
+						nextPowerSystem = chargeHandler.getPowerSystem();
+						energy = energyRemaining;
 					}
 				}
 			}
 		}
 		
+		_powerSystem = nextPowerSystem;
 		return energyRemaining;
 	}
 	

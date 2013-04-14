@@ -5,8 +5,8 @@
 	<property name="build.dir" value="build" />
 	<property name="classes.dir" value="${build.dir}/packaging" />
 	<property name="src.dir" value="src" />
-	<property name="forge.buildnum" value="527" />
-	<property name="forge.version" value="1.4.7-6.6.1.${forge.buildnum}" />
+	<property name="forge.buildnum" value="624" />
+	<property name="forge.version" value="1.5.1-7.7.1.${forge.buildnum}" />
 	<property name="forge.url" value="http://files.minecraftforge.net/minecraftforge/minecraftforge-src-${forge.version}.zip" />
 	<property name="forge.dir" value="${build.dir}/forge" />
 	<property name="mcp.dir" value="${forge.dir}/mcp" />
@@ -37,19 +37,17 @@
 			<available file="${mcpsrc.dir}/thermalexpansion" type="dir"/>
 			<available file="${mcpsrc.dir}/ic2" type="dir"/>
 			<available file="${mcpsrc.dir}/universalelectricity" type="dir"/>
-			<available file="${lib.dir}/Factorization.jar"/>
+			<available file="${lib.dir}/fz-deobf-1.5.1.jar"/>
 		</and>
 	</condition>
 
 	<target name="get-dependencies" depends="get-version" unless="${have-apis}">
-		<echo message="Downloading Thermal Expansion GUI... " />
-		<get src="https://dl.dropbox.com/u/57416963/Minecraft/ThermalExpansion/Source/ThermalExpansion-SRC-2.1.7-GUI.zip" dest="${download.dir}/thermalexpansiongui.zip" />
 		
 		<echo message="Downloading Thermal Expansion API... " />
-		<get src="https://dl.dropbox.com/u/57416963/Minecraft/ThermalExpansion/Release/ThermalExpansion-API-2.2.0.zip" dest="${download.dir}/thermalexpansion.zip" />
-		
-		<echo message="Downloading IC2... " />
-		<get src="http://ic2api.player.to:8080/job/IC2_lf/205/artifact/packages/industrialcraft-2-api_1.113.205-lf.zip" dest="${download.dir}/industrialcraft-2-api.zip" />
+		<get src="https://dl.dropboxusercontent.com/u/57416963/Minecraft/Beta/ThermalExpansion-API-2.3.0.zip" dest="${download.dir}/thermalexpansion.zip" />
+
+		<echo message="Downloading IC2 API... " />
+		<get src="http://ic2api.player.to:8080/job/IC2_lf/290/artifact/packages/industrialcraft-2-api_1.115.290-lf.zip" dest="${download.dir}/industrialcraft-2-api.zip" />
 		
 		<echo message="Downloading BuildCraft API..." />
 		<get src="https://github.com/BuildCraft/BuildCraft/archive/master.zip" dest="${download.dir}/BuildCraft-master.zip"/>
@@ -58,16 +56,10 @@
 		<get src="https://github.com/powercrystals/PowerCrystalsCore/archive/master.zip" dest="${download.dir}/PowerCrystalsCore-master.zip"/>
 		
 		<echo message="Downloading Factorization... " />
-		<get src="http://porpchan.org/Factorization-0.7.10-deobf.jar" dest="${lib.dir}/Factorization-0.7.10-deobf.jar" />		
-		
-		<echo message="Downloading CodeChickenCore... " />
-		<get src="http://porpchan.org/CodeChickenCore%200.7.1.0-deobf.jar" dest="${lib.dir}/CodeChickenCore 0.7.1.0-deobf.jar" />
-		
-		<echo message="Downloading NEI... " />
-		<get src="http://porpchan.org/NotEnoughItems%201.4.5.1-deobf.jar" dest="${lib.dir}/NotEnoughItems 1.4.5.1-deobf.jar" />
-		
+		<get src="http://www.powercrystalsmods.com/build/fz-deobf-1.5.1.jar" dest="${lib.dir}/fz-deobf-1.5.1.jar" />
+
 		<echo message="Downloading UniversalElectricity API... " />
-		<get src="http://calclavia.com/download.php?d=ue/&amp;f=UniversalElectricity_v1.2.6.339_api.zip" dest="${download.dir}/ue-api.zip" />
+		<get src="https://dl.dropbox.com/u/13350431/UniversalElectricity_v1.3.1.354.zip" dest="${download.dir}/ue-api.zip" />
 		
 	</target>
 
@@ -75,15 +67,11 @@
 		<echo message="Extracting PowerCrystalsCore... " />
 		<unzip src="${download.dir}/PowerCrystalsCore-master.zip" dest="${download.dir}"/>
 		<move file="${download.dir}/PowerCrystalsCore-master/src/powercrystals/core" todir="${mcpsrc.dir}/powercrystals/"/>
-		
+
 		<echo message="Extracting BuildCraft API..." />
 		<unzip src="${download.dir}/BuildCraft-master.zip" dest="${download.dir}"/>
 		<mkdir dir="${mcpsrc.dir}/buildcraft/" />
-		<move file="${download.dir}/BuildCraft-master/common/buildcraft" todir="${mcpsrc.dir}/buildcraft/"/>
-		
-		<echo message="Extracting Thermal Expansion GUI... " />
-		<unzip src="${download.dir}/thermalexpansiongui.zip" dest="${download.dir}" />
-		<move file = "${download.dir}/thermalexpansion" todir="${mcpsrc.dir}" />
+		<move file="${download.dir}/BuildCraft-master/common/buildcraft/api" todir="${mcpsrc.dir}/buildcraft/"/>
 		
 		<echo message="Extracting Thermal Expansion API... " />
 		<unzip src="${download.dir}/thermalexpansion.zip" dest="${download.dir}" />
@@ -167,10 +155,10 @@
 			<fileset dir="${mcp.dir}/reobf/minecraft"/>
 		</copy>
 		
-		<copy todir="${classes.dir}/powercrystals/powerconverters/textures">
-			<fileset dir="${mcpsrc.dir}/powercrystals/powerconverters/textures">
-				<include name="*.png" />
-			</fileset>
+		<copy todir="${classes.dir}" file="${mcpsrc.dir}/mcmod.info"/>
+		
+		<copy todir="${classes.dir}/textures/blocks/powercrystals/powerconverters">
+			<fileset dir="${mcpsrc.dir}/powercrystals/powerconverters/textures/blocks/" />
 		</copy>
 		
 		<copy todir="${classes.dir}/powercrystals/powerconverters/textures/gui">
@@ -190,7 +178,7 @@
 		<property name="build.number" value="CUSTOM_BUILD" />
 	</target>
 
-	<target name="setup-forge" depends="download-forge,build-number-there,build-number-not-there" unless="forge.already.installed">
+	<target name="setup-forge" depends="download-core,download-forge,build-number-there,build-number-not-there" unless="forge.already.installed">
 
 		<property name="build.full" value="${build.number}" />
 		<unzip dest="${build.dir}">
@@ -204,12 +192,7 @@
 
 		<chmod file="${forge.dir}/install.sh" perm="+x"/>
 
-		<!-- if your building on OSX these 2 should be executable -->
-
-		
-		<!-- <move file="${download.dir}/codechickencore-src/codechickencore_at.cfg" todir="${forge.dir}/accesstransformers/"/> -->
-		<!-- <move file="${download.dir}/nei-src/nei_at.cfg" todir="${forge.dir}/accesstransformers/"/> -->
-
+		<copy file="${download.dir}/PowerCrystalsCore-master/pcc_at.cfg" todir="${forge.dir}/accesstransformers/"/>
 
 		<!-- Install forge -->
 		<delete dir="${mcp.dir}" failonerror="no"/>
@@ -237,19 +220,13 @@
 		<copy todir="${mcpsrc.dir}" file="mcmod.info" overwrite="true"/>
 	</target>
 	
-<!-- 	<target name="download-nei" unless="forge-exists">
-		<echo message="Downloading CodeChickenCore source... " />
-		<get src="http://www.chickenbones.craftsaddle.org/Files/CodeChicken/CodeChickenCore-src.jar" dest="${download.dir}/codechickencore-src.zip" />
+	<target name="download-core" unless="forge-exists">
+		<echo message="Downloading PowerCrystalsCore... " />
+		<get src="https://github.com/powercrystals/PowerCrystalsCore/archive/master.zip" dest="${download.dir}/PowerCrystalsCore-master.zip"/>
 		
-		<echo message="Downloading NEI source... " />
-		<get src="http://www.chickenbones.craftsaddle.org/Files/NEI/NotEnoughItems-src.jar" dest="${download.dir}/nei-src.zip" />
-		
-		<echo message="Extracting CodeChickenCore source... " />
-		<unzip src="${download.dir}/codechickencore-src.zip" dest="${download.dir}/codechickencore-src/"/>
-		
-		<echo message="Extracting NEI source... " />
-		<unzip src="${download.dir}/nei-src.zip" dest="${download.dir}/nei-src/" />
-	</target> -->
+		<echo message="Extracting PowerCrystalsCore... " />
+		<unzip src="${download.dir}/PowerCrystalsCore-master.zip" dest="${download.dir}"/>
+	</target>
 
 	<target name="download-forge" depends="download-ant-contrib" unless="forge-exists">
 		<taskdef resource="net/sf/antcontrib/antlib.xml">

@@ -1,5 +1,7 @@
 package powercrystals.powerconverters.power;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import powercrystals.core.position.INeighboorUpdateTile;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
@@ -7,14 +9,33 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPowerConverter extends BlockContainer
 {
-	public BlockPowerConverter(int blockId)
+	protected Icon[] _icons;
+	
+	public BlockPowerConverter(int blockId, int metaCount)
 	{
-		super(blockId, 0, Material.clay);
+		super(blockId, Material.clay);
 		setHardness(1.0F);
+		_icons = new Icon[metaCount * 2];
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+	{
+		int offset = ((TileEntityBridgeComponent<?>)world.getBlockTileEntity(x, y, z)).isSideConnectedClient(side) ? 1 : 0;
+		return _icons[world.getBlockMetadata(x, y, z) * 2 + offset];
+	}
+	
+	@Override
+	public Icon getBlockTextureFromSideAndMetadata(int side, int metadata)
+	{
+		return _icons[metadata * 2];
 	}
 
 	@Override
@@ -59,11 +80,5 @@ public class BlockPowerConverter extends BlockContainer
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public String getTextureFile()
-	{
-		return PowerConverterCore.terrainTexture;
 	}
 }

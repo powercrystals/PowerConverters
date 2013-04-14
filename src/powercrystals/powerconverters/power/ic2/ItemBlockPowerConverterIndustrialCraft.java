@@ -22,33 +22,27 @@ public class ItemBlockPowerConverterIndustrialCraft extends ItemBlock
 	}
 	
 	@Override
-	public int getIconFromDamage(int i)
-	{
-		return 0;
-	}
-	
-	@Override
-	public String getItemNameIS(ItemStack itemstack)
+	public String getUnlocalizedName(ItemStack itemstack)
 	{
 		int md = itemstack.getItemDamage();
-		if(md == 0) return "ic2LVConsumer";
-		if(md == 1) return "ic2LVProducer";
-		if(md == 2) return "ic2MVConsumer";
-		if(md == 3) return "ic2MVProducer";
-		if(md == 4) return "ic2HVConsumer";
-		if(md == 5) return "ic2HVProducer";
-		if(md == 6) return "ic2EVConsumer";
-		if(md == 7) return "ic2EVProducer";
+		if(md == 0) return "powerconverters.ic2.lv.consumer";
+		if(md == 1) return "powerconverters.ic2.lv.producer";
+		if(md == 2) return "powerconverters.ic2.mv.consumer";
+		if(md == 3) return "powerconverters.ic2.mv.producer";
+		if(md == 4) return "powerconverters.ic2.hv.consumer";
+		if(md == 5) return "powerconverters.ic2.hv.producer";
+		if(md == 6) return "powerconverters.ic2.ev.consumer";
+		if(md == 7) return "powerconverters.ic2.ev.producer";
 		return "unknown";
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(int itemId, CreativeTabs creativeTab, List subTypes)
     {
         for (int i = 0; i <= 7; i++)
         {
-            par3List.add(new ItemStack(par1, 1, i));
+            subTypes.add(new ItemStack(itemId, 1, i));
         }
     }
 }

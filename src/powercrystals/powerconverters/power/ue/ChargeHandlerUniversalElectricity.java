@@ -6,8 +6,8 @@ import net.minecraft.util.MathHelper;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.IChargeHandler;
 import powercrystals.powerconverters.power.PowerSystem;
-import universalelectricity.core.electricity.ElectricInfo;
-import universalelectricity.core.implement.IItemElectric;
+import universalelectricity.core.electricity.ElectricityPack;
+import universalelectricity.core.item.IItemElectric;
 
 public class ChargeHandlerUniversalElectricity implements IChargeHandler
 {
@@ -27,18 +27,12 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 	public int charge(ItemStack stack, int energyInput)
 	{
 		IItemElectric item = (IItemElectric)Item.itemsList[stack.itemID];
-		if(!item.canReceiveElectricity())
-		{
-			return 0;
-		}
 		
-		double joulesInput = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
+		double wattsInput = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
 		
-		double ampsToGive = Math.min(ElectricInfo.getAmps(Math.min(item.getMaxJoules(stack) * 0.005, joulesInput), 120), joulesInput);
-		double joules = item.onReceive(ampsToGive, 120, stack);
-		double joulesRemaining = joulesInput - (ElectricInfo.getJoules(ampsToGive, 120, 1) - joules);
+		ElectricityPack remaining = item.onReceive(new ElectricityPack(wattsInput, 120), stack);
 		
-		int energyRemaining = MathHelper.floor_double(joulesRemaining * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
+		int energyRemaining = MathHelper.floor_double(remaining.getWatts() * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
 		
 		return energyRemaining;
 	}

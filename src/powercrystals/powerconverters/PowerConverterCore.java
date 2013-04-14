@@ -69,14 +69,12 @@ public class PowerConverterCore implements IUpdateableMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.2.2";
+	public static final String version = "1.4.6R2.3.0B1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
 	
 	private static final String _texureFolder = "/powercrystals/powerconverters/textures/";
-	public static final String terrainTexture = _texureFolder + "terrain_0.png";
-	public static final String itemTexture = _texureFolder + "items_0.png";
 	public static final String guiFolder = _texureFolder + "gui/";
 
 	public static Block converterBlockCommon;
@@ -356,12 +354,6 @@ public class PowerConverterCore implements IUpdateableMod
 	public String getModName()
 	{
 		return modName;
-	}
-
-	@Override
-	public String getModFolder()
-	{
-		return modId;
 	}
 
 	@Override

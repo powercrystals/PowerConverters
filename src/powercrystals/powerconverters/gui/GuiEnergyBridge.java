@@ -73,9 +73,8 @@ public class GuiEnergyBridge extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float gameTicks, int mouseX, int mouseY)
 	{
-		int texture = mc.renderEngine.getTexture(PowerConverterCore.guiFolder + "energybridge.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.renderEngine.bindTexture(texture);
+		this.mc.renderEngine.bindTexture(PowerConverterCore.guiFolder + "energybridge.png");
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

@@ -22,25 +22,19 @@ public class ItemBlockPowerConverterCommon extends ItemBlock
 	}
 	
 	@Override
-	public int getIconFromDamage(int i)
-	{
-		return 0;
-	}
-	
-	@Override
-	public String getItemNameIS(ItemStack itemstack)
+	public String getUnlocalizedName(ItemStack itemstack)
 	{
 		int md = itemstack.getItemDamage();
-		if(md == 0) return "energyBridge";
-		if(md == 2) return "energyCharger";
+		if(md == 0) return "powerconverters.common.bridge";
+		if(md == 2) return "powerconverters.common.charger";
 		return "unknown";
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(int itemId, CreativeTabs creativeTab, List subTypes)
     {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 2));
+        subTypes.add(new ItemStack(itemId, 1, 0));
+        subTypes.add(new ItemStack(itemId, 1, 2));
     }
 }

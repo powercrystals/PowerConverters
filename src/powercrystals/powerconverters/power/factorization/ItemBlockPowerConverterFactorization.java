@@ -21,27 +21,21 @@ public class ItemBlockPowerConverterFactorization extends ItemBlock
 	}
 
 	@Override
-	public int getIconFromDamage(int i)
-	{
-		return 0;
-	}
-
-	@Override
-	public String getItemNameIS(ItemStack itemstack)
+	public String getUnlocalizedName(ItemStack itemstack)
 	{
 		int md = itemstack.getItemDamage();
-		if (md == 0) return "fzConsumer";
-		if (md == 1) return "fzProducer";
+		if (md == 0) return "powerconverters.fz.consumer";
+		if (md == 1) return "powerconverters.fz.producer";
 		return "unknown";
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(int itemId, CreativeTabs creativeTab, List subTypes)
 	{
 		for (int i = 0; i <= 1; i++)
 		{
-			par3List.add(new ItemStack(par1, 1, i));
+			subTypes.add(new ItemStack(itemId, 1, i));
 		}
 	}
 }
