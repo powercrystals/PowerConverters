@@ -147,7 +147,7 @@ public class PowerConverterCore extends BaseMod
 				Character.valueOf('I'), Item.ingotIron,
 				Character.valueOf('C'), Block.chest);
 		
-		if(Loader.isModLoaded("BuildCraft|Energy") || Loader.isModLoaded("ThermalExpansion|Energy"))
+		if(Loader.isModLoaded("BuildCraft|Energy") || Loader.isModLoaded("ThermalExpansion"))
 		{
 			converterBlockBuildCraft = new BlockPowerConverterBuildCraft(blockIdBuildCraft.getInt());
 			GameRegistry.registerBlock(converterBlockBuildCraft, ItemBlockPowerConverterBuildCraft.class, converterBlockBuildCraft.getUnlocalizedName());
@@ -219,7 +219,7 @@ public class PowerConverterCore extends BaseMod
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerIndustrialCraft());
 		}
 		
-		if(Loader.isModLoaded("Railcraft"))
+		if(Loader.isModLoaded("Railcraft") || Loader.isModLoaded("factorization"))
 		{
 			converterBlockSteam = new BlockPowerConverterRailCraft(blockIdSteam.getInt());
 			GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterRailCraft.class, converterBlockSteam.getUnlocalizedName());
@@ -228,10 +228,21 @@ public class PowerConverterCore extends BaseMod
 			LanguageRegistry.addName(new ItemStack(converterBlockSteam, 1, 0), "Steam Consumer");
 			LanguageRegistry.addName(new ItemStack(converterBlockSteam, 1, 1), "Steam Producer");
 			
-			GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0),
-					"G G", " E ", "G G",
-					Character.valueOf('G'), Item.ingotGold,
-					Character.valueOf('E'), new ItemStack((Block)(Class.forName("railcraft.common.blocks.RailcraftBlocks").getMethod("getBlockMachineBeta").invoke(null)), 1, 8));
+			if(Loader.isModLoaded("Railcraft"))
+			{
+				GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0),
+						"G G", " E ", "G G",
+						Character.valueOf('G'), Item.ingotGold,
+						Character.valueOf('E'), new ItemStack((Block)(Class.forName("railcraft.common.blocks.RailcraftBlocks").getMethod("getBlockMachineBeta").invoke(null)), 1, 8));
+			}
+			else
+			{
+				Object fzRegistry = Class.forName("factorization.common.Core").getField("registry").get(null);
+				GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0),
+						"G G", " E ", "G G",
+						Character.valueOf('G'), Item.ingotGold,
+						Character.valueOf('E'), (ItemStack)(Class.forName("factorization.common.Registry").getField("steamturbine_item").get(fzRegistry)));
+			}
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
@@ -302,7 +313,7 @@ public class PowerConverterCore extends BaseMod
 			GameRegistry.addRecipe(new ItemStack(converterBlockFactorization, 1, 0),
 					"I I", " B ", "I I",
 					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), (ItemStack)(Class.forName("factorization.common.Registry").getField("solar_turbine_item").get(fzRegistry)));
+					Character.valueOf('B'), (ItemStack)(Class.forName("factorization.common.Registry").getField("solarboiler_item").get(fzRegistry)));
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockFactorization, 1, 1), new ItemStack(converterBlockFactorization, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockFactorization, 1, 0), new ItemStack(converterBlockFactorization, 1, 1));
@@ -326,6 +337,10 @@ public class PowerConverterCore extends BaseMod
 	public void forgeEvent(LiquidRegisterEvent e)
 	{
 		if(e.Name.equals("Steam"))
+		{
+			steamId = e.Liquid.itemID;
+		}
+		else if(e.Name.equals("steam") && steamId <= 0)
 		{
 			steamId = e.Liquid.itemID;
 		}
