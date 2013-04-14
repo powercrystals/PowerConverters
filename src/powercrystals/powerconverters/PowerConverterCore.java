@@ -126,7 +126,7 @@ public class PowerConverterCore implements IUpdateableMod
 		instance = this;
 		
 		converterBlockCommon = new BlockPowerConverterCommon(blockIdCommon.getInt());
-		GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "blockPowerConverterCommon");
+		GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, converterBlockCommon.getUnlocalizedName());
 		GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
 		GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 		LanguageRegistry.addName(new ItemStack(converterBlockCommon, 1, 0), "Energy Bridge");
@@ -149,7 +149,7 @@ public class PowerConverterCore implements IUpdateableMod
 		if(Loader.isModLoaded("BuildCraft|Energy") || Loader.isModLoaded("ThermalExpansion|Energy"))
 		{
 			converterBlockBuildCraft = new BlockPowerConverterBuildCraft(blockIdBuildCraft.getInt());
-			GameRegistry.registerBlock(converterBlockBuildCraft, ItemBlockPowerConverterBuildCraft.class, "blockPowerConverterBuildCraft");
+			GameRegistry.registerBlock(converterBlockBuildCraft, ItemBlockPowerConverterBuildCraft.class, converterBlockBuildCraft.getUnlocalizedName());
 			GameRegistry.registerTileEntity(TileEntityBuildCraftConsumer.class, "powerConverterBCConsumer");
 			GameRegistry.registerTileEntity(TileEntityBuildCraftProducer.class, "powerConverterBCProducer");
 			LanguageRegistry.addName(new ItemStack(converterBlockBuildCraft, 1, 0), "BC Consumer");
@@ -177,7 +177,7 @@ public class PowerConverterCore implements IUpdateableMod
 		if(Loader.isModLoaded("IC2"))
 		{
 			converterBlockIndustrialCraft = new BlockPowerConverterIndustrialCraft(blockIdIndustrialCraft.getInt());
-			GameRegistry.registerBlock(converterBlockIndustrialCraft, ItemBlockPowerConverterIndustrialCraft.class, "blockPowerConverterIndustrialCraft");
+			GameRegistry.registerBlock(converterBlockIndustrialCraft, ItemBlockPowerConverterIndustrialCraft.class, converterBlockIndustrialCraft.getUnlocalizedName());
 			GameRegistry.registerTileEntity(TileEntityIndustrialCraftConsumer.class, "powerConverterIC2Consumer");
 			GameRegistry.registerTileEntity(TileEntityIndustrialCraftProducer.class, "powerConverterIC2Producer");
 			LanguageRegistry.addName(new ItemStack(converterBlockIndustrialCraft, 1, 0), "IC2 LV Consumer");
@@ -221,7 +221,7 @@ public class PowerConverterCore implements IUpdateableMod
 		if(Loader.isModLoaded("Railcraft"))
 		{
 			converterBlockSteam = new BlockPowerConverterRailCraft(blockIdSteam.getInt());
-			GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterRailCraft.class, "blockPowerConverterSteam");
+			GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterRailCraft.class, converterBlockSteam.getUnlocalizedName());
 			GameRegistry.registerTileEntity(TileEntityRailCraftConsumer.class, "powerConverterSteamConsumer");
 			GameRegistry.registerTileEntity(TileEntityRailCraftProducer.class, "powerConverterSteamProducer");
 			LanguageRegistry.addName(new ItemStack(converterBlockSteam, 1, 0), "Steam Consumer");
@@ -244,7 +244,7 @@ public class PowerConverterCore implements IUpdateableMod
 		if(Loader.isModLoaded("BasicComponents"))
 		{
 			converterBlockUniversalElectricity = new BlockPowerConverterUniversalElectricity(blockIdUniversalElectricty.getInt());
-			GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, "blockPowerConverterUniversalElectricity");
+			GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, converterBlockUniversalElectricity.getUnlocalizedName());
 			GameRegistry.registerTileEntity(TileEntityUniversalElectricityConsumer.class, "powerConverterUEConsumer");
 			GameRegistry.registerTileEntity(TileEntityUniversalElectricityProducer.class, "powerConverterUEProducer");
 			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 0), "UE 60V Consumer");
@@ -259,22 +259,22 @@ public class PowerConverterCore implements IUpdateableMod
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
 					"I I", "   ", "IBI",
 					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
+					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
 					"I I", " B ", "I I",
 					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
+					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
 					"IBI", "   ", "I I",
 					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
+					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
 					"IBI", "I I", "I I",
 					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("basiccomponents.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
+					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0), new ItemStack(converterBlockUniversalElectricity, 1, 1));
@@ -289,7 +289,7 @@ public class PowerConverterCore implements IUpdateableMod
 		if(Loader.isModLoaded("factorization"))
 		{
 			converterBlockFactorization = new BlockPowerConverterFactorization(blockIdFactorization.getInt());
-			GameRegistry.registerBlock(converterBlockFactorization, ItemBlockPowerConverterFactorization.class, "blockPowerConverterFZ");
+			GameRegistry.registerBlock(converterBlockFactorization, ItemBlockPowerConverterFactorization.class,converterBlockFactorization.getUnlocalizedName());
 			GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
 			LanguageRegistry.addName(new ItemStack(converterBlockFactorization, 1, 0), "Factorization Consumer");
 			
