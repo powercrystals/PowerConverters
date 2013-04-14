@@ -1,7 +1,7 @@
 package powercrystals.powerconverters;
 
 import cpw.mods.fml.common.IScheduledTickHandler;
-import powercrystals.core.updater.IUpdateableMod;
+import powercrystals.core.mod.BaseMod;
 import powercrystals.core.updater.UpdateManager;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
 import powercrystals.powerconverters.common.ItemBlockPowerConverterCommon;
@@ -61,11 +61,11 @@ import powercrystals.powerconverters.power.factorization.TileEntityPowerConverte
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationProducer;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, version = PowerConverterCore.version,
-dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion|Energy")
+dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false,
-clientPacketHandlerSpec = @SidedPacketHandler(channels = { "PowerConverters" }, packetHandler = ClientPacketHandler.class),
+clientPacketHandlerSpec = @SidedPacketHandler(channels = { PowerConverterCore.modId }, packetHandler = ClientPacketHandler.class),
 connectionHandler = ConnectionHandler.class)
-public class PowerConverterCore implements IUpdateableMod
+public class PowerConverterCore extends BaseMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
@@ -114,9 +114,10 @@ public class PowerConverterCore implements IUpdateableMod
 		PowerSystem.registerPowerSystem(powerSystemIndustrialCraft);
 		PowerSystem.registerPowerSystem(powerSystemSteam);
 		PowerSystem.registerPowerSystem(powerSystemUniversalElectricity);
-				PowerSystem.registerPowerSystem(powerSystemFactorization);
+		PowerSystem.registerPowerSystem(powerSystemFactorization);
 		
-		Configuration c = new Configuration(evt.getSuggestedConfigurationFile());
+		setConfigFolderBase(evt.getModConfigurationDirectory());
+		Configuration c = new Configuration(getCommonConfig());
 		loadConfig(c);
 	}
 
