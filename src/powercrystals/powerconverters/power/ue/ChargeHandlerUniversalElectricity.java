@@ -30,11 +30,9 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 		
 		double wattsInput = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
 		
-		ElectricityPack remaining = item.onReceive(new ElectricityPack(wattsInput, 120), stack);
+		ElectricityPack consumed = item.onReceive(new ElectricityPack(wattsInput, 120), stack);
 		
-		int energyRemaining = MathHelper.floor_double(remaining.getWatts() * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
-		
-		return energyRemaining;
+		return MathHelper.floor_double(wattsInput - consumed.getWatts() * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
 	}
 
 	@Override
