@@ -1,14 +1,16 @@
 package powercrystals.powerconverters.power.ue;
 
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.ForgeDirection;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import universalelectricity.core.block.IConductor;
+import universalelectricity.core.block.IConnector;
 import universalelectricity.core.block.IVoltage;
 import universalelectricity.core.electricity.ElectricityNetworkHelper;
 import universalelectricity.core.electricity.ElectricityPack;
 
-public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyConsumer<IConductor> implements IVoltage
+public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyConsumer<IConductor> implements IVoltage, IConnector
 {
 	private int _wattsLastTick;
 	
@@ -50,5 +52,11 @@ public class TileEntityUniversalElectricityConsumer extends TileEntityEnergyCons
 	public int getInputRate()
 	{
 		return _wattsLastTick;
+	}
+
+	@Override
+	public boolean canConnect(ForgeDirection direction)
+	{
+		return true;
 	}
 }

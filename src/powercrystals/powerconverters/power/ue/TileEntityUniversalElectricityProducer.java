@@ -1,14 +1,16 @@
 package powercrystals.powerconverters.power.ue;
 
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.ForgeDirection;
 
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 import universalelectricity.core.block.IConductor;
+import universalelectricity.core.block.IConnector;
 import universalelectricity.core.block.IVoltage;
 import universalelectricity.core.electricity.ElectricityNetworkHelper;
 import universalelectricity.core.electricity.ElectricityPack;
-public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProducer<IConductor> implements IVoltage
+public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProducer<IConductor> implements IVoltage, IConnector
 {
 	public TileEntityUniversalElectricityProducer()
 	{
@@ -34,5 +36,11 @@ public class TileEntityUniversalElectricityProducer extends TileEntityEnergyProd
 	public double getVoltage()
 	{
 		return getPowerSystem().getVoltageValues()[getVoltageIndex()];
+	}
+
+	@Override
+	public boolean canConnect(ForgeDirection direction)
+	{
+		return true;
 	}
 }
