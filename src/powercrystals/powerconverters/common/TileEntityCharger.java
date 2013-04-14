@@ -53,18 +53,9 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 			energyRemaining = chargeInventory(_player.inventory, ForgeDirection.UNKNOWN, energyRemaining);
 		}
 		
-		if(energyRemaining < energy)
-		{
-			return energyRemaining;
-		}
-		
 		for(Entry<ForgeDirection, IInventory> inv : getTiles().entrySet())
 		{
 			energyRemaining = chargeInventory(inv.getValue(), inv.getKey(), energyRemaining);
-			if(energyRemaining < energy)
-			{
-				return energyRemaining;
-			}
 		}
 		
 		return energyRemaining;
