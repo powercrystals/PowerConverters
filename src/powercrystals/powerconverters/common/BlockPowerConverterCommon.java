@@ -42,7 +42,7 @@ public class BlockPowerConverterCommon extends BlockContainer
 	}
 	
 	@Override
-	public Icon getBlockTextureFromSideAndMetadata(int side, int meta)
+	public Icon getIcon(int side, int meta)
 	{
 		if(meta == 0) return _iconBridge;
 		else if(meta == 2) return _iconChargerOff;
@@ -75,7 +75,7 @@ public class BlockPowerConverterCommon extends BlockContainer
 			}
 		}
 		
-    	return getBlockTextureFromSideAndMetadata(side, meta);
+    	return getIcon(side, meta);
     }
 	
 	@Override

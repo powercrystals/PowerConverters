@@ -55,10 +55,16 @@ public class PowerSystem
 	
 	public static void loadConfig(Configuration c)
 	{
+		String powerRatioComment = "Not all power systems listed here are used; they are provided so that\r\n" +
+		                           "the ratios are all stored in a single place and for possible future use.";
+		
+		c.addCustomCategoryComment("PowerRatios", powerRatioComment);
+		
 		for(Entry<Integer, PowerSystem> p : _powerSystems.entrySet())
 		{
-			p.getValue()._internalEnergyPerInput = c.get("RATIOS", p.getValue()._name + "InternalEnergyPerEachInput", p.getValue()._internalEnergyPerInput).getInt();
-			p.getValue()._internalEnergyPerOutput = c.get("RATIOS", p.getValue()._name + "InternalEnergyPerEachOutput", p.getValue()._internalEnergyPerOutput).getInt();
+			String configSection = "PowerRatios." + p.getValue()._name;
+			p.getValue()._internalEnergyPerInput = c.get(configSection, p.getValue()._name + "InternalEnergyPerEachInput", p.getValue()._internalEnergyPerInput).getInt();
+			p.getValue()._internalEnergyPerOutput = c.get(configSection, p.getValue()._name + "InternalEnergyPerEachOutput", p.getValue()._internalEnergyPerOutput).getInt();
 		}
 	}
 	

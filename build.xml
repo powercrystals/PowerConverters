@@ -5,7 +5,7 @@
 	<property name="build.dir" value="build" />
 	<property name="classes.dir" value="${build.dir}/packaging" />
 	<property name="src.dir" value="src" />
-	<property name="forge.buildnum" value="624" />
+	<property name="forge.buildnum" value="652" />
 	<property name="forge.version" value="1.5.1-7.7.1.${forge.buildnum}" />
 	<property name="forge.url" value="http://files.minecraftforge.net/minecraftforge/minecraftforge-src-${forge.version}.zip" />
 	<property name="forge.dir" value="${build.dir}/forge" />
@@ -59,7 +59,7 @@
 		<get src="http://www.powercrystalsmods.com/build/fz-deobf-1.5.1.jar" dest="${lib.dir}/fz-deobf-1.5.1.jar" />
 
 		<echo message="Downloading UniversalElectricity API... " />
-		<get src="https://dl.dropbox.com/u/13350431/UniversalElectricity_v1.3.1.354.zip" dest="${download.dir}/ue-api.zip" />
+		<get src="http://www.powercrystalsmods.com/build/UniversalElectricity_v1.3.1.67.zip" dest="${download.dir}/ue-api.zip" />
 		
 	</target>
 
@@ -138,11 +138,12 @@
 
 		<!-- Reobf -->
 		<exec dir="${mcp.dir}" executable="cmd" osfamily="windows">
-			<arg line="/c reobfuscate.bat"/>
+			<arg line="/c reobfuscate.bat --srgnames"/>
 		</exec>
 
 		<exec dir="${mcp.dir}" executable="sh" osfamily="unix">
 			<arg value="reobfuscate.sh" />
+			<arg value="--srgnames" />
 		</exec>
 		
 		<delete dir="${mcp.dir}/reobf/minecraft/buildcraft"/>
