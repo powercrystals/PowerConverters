@@ -95,10 +95,10 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory>
 	
 	public void setPlayer(EntityPlayer player)
 	{
-		_player = player;
-		if(worldObj.isRemote)
+		if(worldObj.isRemote && _player != player)
 		{
 			worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+			_player = player;
 		}
 	}
 	
