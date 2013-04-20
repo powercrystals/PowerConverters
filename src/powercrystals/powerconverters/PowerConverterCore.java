@@ -230,10 +230,10 @@ public class PowerConverterCore extends BaseMod
 			
 			if(Loader.isModLoaded("Railcraft"))
 			{
-				//GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0),
-				//		"G G", " E ", "G G",
-				//		Character.valueOf('G'), Item.ingotGold,
-				//		Character.valueOf('E'), new ItemStack((Block)(Class.forName("railcraft.common.blocks.RailcraftBlocks").getMethod("getBlockMachineBeta").invoke(null)), 1, 8));
+				GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0),
+						"G G", " E ", "G G",
+						Character.valueOf('G'), Item.ingotGold,
+						Character.valueOf('E'), new ItemStack((Block)(Class.forName("mods.railcraft.common.blocks.RailcraftBlocks").getMethod("getBlockMachineBeta").invoke(null)), 1, 8));
 			}
 			else
 			{
