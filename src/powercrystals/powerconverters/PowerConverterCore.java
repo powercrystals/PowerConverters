@@ -59,6 +59,7 @@ import powercrystals.powerconverters.power.factorization.BlockPowerConverterFact
 import powercrystals.powerconverters.power.factorization.ItemBlockPowerConverterFactorization;
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationConsumer;
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationProducer;
+import thermalexpansion.api.item.ItemRegistry;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, version = PowerConverterCore.version,
 dependencies = "required-after:PowerCrystalsCore;after:BasicComponents;after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
@@ -163,12 +164,12 @@ public class PowerConverterCore extends BaseMod
 						Character.valueOf('G'), Item.ingotGold,
 						Character.valueOf('E'), new ItemStack((Block)(Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null)), 1, 1));
 			}
-			if(Loader.isModLoaded("ThermalExpansion|Energy"))
+			if(Loader.isModLoaded("ThermalExpansion"))
 			{
 				GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
 						"G G", " E ", "G G",
 						Character.valueOf('G'), Item.ingotGold,
-						Character.valueOf('E'), (ItemStack)(Class.forName("thermalexpansion.ThermalExpansionEnergy").getField("engineSteam").get(null)));
+						Character.valueOf('E'), ItemRegistry.getItem("engineSteam", 1));
 			}
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockBuildCraft, 1, 1), new ItemStack(converterBlockBuildCraft, 1, 0));
