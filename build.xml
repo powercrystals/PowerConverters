@@ -59,7 +59,7 @@
 		<get src="http://www.powercrystalsmods.com/build/fz-deobf-1.5.1.jar" dest="${lib.dir}/fz-deobf-1.5.1.jar" />
 
 		<echo message="Downloading UniversalElectricity API... " />
-		<get src="http://www.powercrystalsmods.com/build/UniversalElectricity_v1.3.1.67.zip" dest="${download.dir}/ue-api.zip" />
+		<get src="http://www.powercrystalsmods.com/build/UniversalElectricity_v1.3.2.74.zip" dest="${download.dir}/ue-api.zip" />
 		
 	</target>
 

@@ -164,7 +164,7 @@ public class PowerConverterCore extends BaseMod
 						Character.valueOf('G'), Item.ingotGold,
 						Character.valueOf('E'), new ItemStack((Block)(Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null)), 1, 1));
 			}
-			if(Loader.isModLoaded("ThermalExpansion"))
+			if(Loader.isModLoaded("ThermalExpansion") && false)
 			{
 				GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
 						"G G", " E ", "G G",

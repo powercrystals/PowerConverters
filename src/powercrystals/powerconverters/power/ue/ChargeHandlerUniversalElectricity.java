@@ -20,7 +20,7 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 	@Override
 	public boolean canHandle(ItemStack stack)
 	{
-		return stack != null && Item.itemsList[stack.itemID] != null && Item.itemsList[stack.itemID] instanceof IItemElectric;
+		return stack != null && stack.getItem() instanceof IItemElectric;
 	}
 
 	@Override
@@ -28,11 +28,11 @@ public class ChargeHandlerUniversalElectricity implements IChargeHandler
 	{
 		IItemElectric item = (IItemElectric)Item.itemsList[stack.itemID];
 		
-		double wattsInput = energyInput / PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput();
+		double wattsInput = energyInput / getPowerSystem().getInternalEnergyPerOutput();
 		
-		ElectricityPack consumed = item.onReceive(new ElectricityPack(wattsInput, 120), stack);
+		ElectricityPack consumed = item.onReceive(ElectricityPack.getFromWatts(wattsInput, 120), stack);
 		
-		return MathHelper.floor_double(wattsInput - consumed.getWatts() * PowerConverterCore.powerSystemUniversalElectricity.getInternalEnergyPerOutput());
+		return MathHelper.floor_double((wattsInput - consumed.getWatts()) * getPowerSystem().getInternalEnergyPerOutput());
 	}
 
 	@Override
