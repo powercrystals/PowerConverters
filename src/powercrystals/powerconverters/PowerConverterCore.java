@@ -13,6 +13,7 @@ import powercrystals.powerconverters.net.ConnectionHandler;
 import powercrystals.powerconverters.net.IPCProxy;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.buildcraft.BlockPowerConverterBuildCraft;
+import powercrystals.powerconverters.power.buildcraft.ChargeHandlerThermalExpansion;
 import powercrystals.powerconverters.power.buildcraft.ItemBlockPowerConverterBuildCraft;
 import powercrystals.powerconverters.power.buildcraft.TileEntityBuildCraftConsumer;
 import powercrystals.powerconverters.power.buildcraft.TileEntityBuildCraftProducer;
@@ -94,6 +95,8 @@ public class PowerConverterCore extends BaseMod
 	private static Property blockIdUniversalElectricty;
 	private static Property blockIdFactorization;
 	
+	public static Property bridgeBufferSize;
+	
 	public static PowerSystem powerSystemBuildCraft;
 	public static PowerSystem powerSystemIndustrialCraft;
 	public static PowerSystem powerSystemSteam;
@@ -164,12 +167,13 @@ public class PowerConverterCore extends BaseMod
 						Character.valueOf('G'), Item.ingotGold,
 						Character.valueOf('E'), new ItemStack((Block)(Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null)), 1, 1));
 			}
-			if(Loader.isModLoaded("ThermalExpansion") && false)
+			if(Loader.isModLoaded("ThermalExpansion"))
 			{
-				GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
-						"G G", " E ", "G G",
-						Character.valueOf('G'), Item.ingotGold,
-						Character.valueOf('E'), ItemRegistry.getItem("engineSteam", 1));
+				//GameRegistry.addRecipe(new ItemStack(converterBlockBuildCraft, 1, 0),
+				//		"G G", " E ", "G G",
+				//		Character.valueOf('G'), Item.ingotGold,
+				//		Character.valueOf('E'), ItemRegistry.getItem("engineSteam", 1));
+				TileEntityCharger.registerChargeHandler(new ChargeHandlerThermalExpansion());
 			}
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockBuildCraft, 1, 1), new ItemStack(converterBlockBuildCraft, 1, 0));
@@ -355,6 +359,8 @@ public class PowerConverterCore extends BaseMod
 		blockIdSteam = c.getBlock("ID.BlockSteam", 2853);
 		blockIdUniversalElectricty = c.getBlock("ID.BlockUniversalElectricty", 2854);
 		blockIdFactorization = c.getBlock("ID.BlockFactorization", 2855);
+		
+		bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "BridgeBufferSize", 160000000);
 		
 		PowerSystem.loadConfig(c);
 		

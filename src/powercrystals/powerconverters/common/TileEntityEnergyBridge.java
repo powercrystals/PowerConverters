@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import powercrystals.core.position.BlockPosition;
 import powercrystals.core.position.INeighboorUpdateTile;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityBridgeComponent;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
@@ -20,7 +21,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpdateTile
 {
 	private int _energyStored;
-	private int _energyStoredMax = 16000000;
+	private int _energyStoredMax = PowerConverterCore.bridgeBufferSize.getInt();
 	private int _energyScaledClient;
 	
 	private int _energyStoredLast;
