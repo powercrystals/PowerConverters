@@ -1,7 +1,7 @@
 package powercrystals.powerconverters.power.ic2;
 
-import ic2.api.ElectricItem;
-import ic2.api.IElectricItem;
+import ic2.api.item.ElectricItem;
+import ic2.api.item.IElectricItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import powercrystals.powerconverters.PowerConverterCore;
