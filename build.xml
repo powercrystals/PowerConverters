@@ -47,7 +47,7 @@
 		<get src="https://dl.dropboxusercontent.com/u/57416963/Minecraft/Mods/ThermalExpansion/api/ThermalExpansion-API-2.3.0.zip" dest="${download.dir}/thermalexpansion.zip" />
 
 		<echo message="Downloading IC2 API... " />
-		<get src="http://ic2api.player.to:8080/job/IC2_lf/304/artifact/packages/industrialcraft-2-api_1.115.304-lf.zip" dest="${download.dir}/industrialcraft-2-api.zip" />
+		<get src="http://www.powercrystalsmods.com/build/ic2-api.zip" dest="${download.dir}/industrialcraft-2-api.zip" />
 		
 		<echo message="Downloading BuildCraft API..." />
 		<get src="https://github.com/BuildCraft/BuildCraft/archive/master.zip" dest="${download.dir}/BuildCraft-master.zip"/>
@@ -80,7 +80,6 @@
 		<echo message="Extracting IC2 API... " />
 		<unzip src="${download.dir}/industrialcraft-2-api.zip" dest="${download.dir}" />
 		<move file="${download.dir}/ic2" todir="${mcpsrc.dir}" />
-		<delete dir="${mcpsrc.dir}/ic2/api/crops" />
 		
 		<echo message="Exctracting UniversalElectricity API... " />
 		<unzip src="${download.dir}/ue-api.zip" dest="${download.dir}/universalelectricity/" />
