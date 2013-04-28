@@ -70,7 +70,7 @@ public class PowerConverterCore extends BaseMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.4.6R2.3.0B2";
+	public static final String version = "1.5.1R2.3.0";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
