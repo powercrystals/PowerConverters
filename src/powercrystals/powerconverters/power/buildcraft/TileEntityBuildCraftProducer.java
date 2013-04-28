@@ -30,17 +30,17 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
 			IPowerProvider pp = output.getValue().getPowerProvider();
 			if(pp != null && pp.preConditions(output.getValue()) && pp.getMinEnergyReceived() <= mj)
 			{
-				int energyUsed = Math.min(Math.min(pp.getMaxEnergyReceived(), mj), pp.getMaxEnergyStored() - (int)Math.floor(pp.getEnergyStored()));
-				pp.receiveEnergy(energyUsed, output.getKey());
+				int mjUsed = Math.min(Math.min(pp.getMaxEnergyReceived(), mj), pp.getMaxEnergyStored() - (int)Math.floor(pp.getEnergyStored()));
+				pp.receiveEnergy(mjUsed, output.getKey());
 				
-				energy -= energyUsed * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerOutput();
-				if(energy <= 0)
+				mj -= mjUsed;
+				if(mj <= 0)
 				{
 					return 0;
 				}
 			}
 		}
-		return energy;
+		return mj * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerOutput();
 	}
 
 	@Override
