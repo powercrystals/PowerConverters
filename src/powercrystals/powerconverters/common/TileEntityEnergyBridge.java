@@ -184,7 +184,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
 		}
 		else
 		{
-			return 120 * _energyStored / _energyStoredMax;
+			return (int)(120 * ((double)_energyStored / (double)_energyStoredMax));
 		}
 	}
 	
