@@ -55,7 +55,7 @@ public class PowerSystem
 	
 	public static void loadConfig(Configuration c)
 	{
-		String powerRatioComment = "Not all power systems listed here are used; they are provided so that\r\n" +
+		String powerRatioComment = "Not all power systems listed here are necessarily used; they may be provided so that\r\n" +
 		                           "the ratios are all stored in a single place and for possible future use.";
 		
 		c.addCustomCategoryComment("PowerRatios", powerRatioComment);

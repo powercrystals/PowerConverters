@@ -111,7 +111,7 @@ public class PowerConverterCore extends BaseMod
 		powerSystemIndustrialCraft = new PowerSystem("IndustrialCraft", "IC2", 1800, 1800, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 32, 128, 512, 2048 }, "EU/t");
 		powerSystemSteam = new PowerSystem("Steam", "STEAM", 875, 875, null, null, "mB/t");
 		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 60, 120, 240, 480 }, "W");
-		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 4375 / 3, 4375 / 3, null, null, "CG/t");
+		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 875, 875, null, null, "CG/t");
 				
 		PowerSystem.registerPowerSystem(powerSystemBuildCraft);
 		PowerSystem.registerPowerSystem(powerSystemIndustrialCraft);
