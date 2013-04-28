@@ -96,6 +96,13 @@ public class PowerConverterCore extends BaseMod
 	
 	public static Property bridgeBufferSize;
 	
+	public static Property throttleSteamConsumer;
+	public static Property throttleSteamProducer;
+	public static Property throttleIC2LVProducer;
+	public static Property throttleIC2MVProducer;
+	public static Property throttleIC2HVProducer;
+	public static Property throttleIC2EVProducer;
+	
 	public static PowerSystem powerSystemBuildCraft;
 	public static PowerSystem powerSystemIndustrialCraft;
 	public static PowerSystem powerSystemSteam;
@@ -360,6 +367,19 @@ public class PowerConverterCore extends BaseMod
 		blockIdFactorization = c.getBlock("ID.BlockFactorization", 2855);
 		
 		bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "BridgeBufferSize", 160000000);
+		
+		throttleSteamConsumer = c.get("Throttles", "Steam.Consumer", 1000);
+		throttleSteamConsumer.comment = "mB/t";
+		throttleSteamProducer = c.get("Throttles", "Steam.Producer", 1000);
+		throttleSteamProducer.comment = "mB/t";
+		throttleIC2LVProducer = c.get("Throttles", "IC2.Consumer.LV", 1);
+		throttleIC2LVProducer.comment = "Packets/t";
+		throttleIC2MVProducer = c.get("Throttles", "IC2.Consumer.MV", 1);
+		throttleIC2MVProducer.comment = "Packets/t";
+		throttleIC2HVProducer = c.get("Throttles", "IC2.Consumer.HV", 1);
+		throttleIC2HVProducer.comment = "Packets/t";
+		throttleIC2EVProducer = c.get("Throttles", "IC2.Consumer.EV", 1);
+		throttleIC2EVProducer.comment = "Packets/t";
 		
 		PowerSystem.loadConfig(c);
 		

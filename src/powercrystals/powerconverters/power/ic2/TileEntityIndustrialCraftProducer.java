@@ -16,6 +16,8 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	private boolean _isAddedToEnergyNet;
 	private boolean _didFirstAddToNet;
 	
+	private int _packetCount;
+	
 	public TileEntityIndustrialCraftProducer()
 	{
 		this(0);
@@ -24,6 +26,22 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 	public TileEntityIndustrialCraftProducer(int voltageIndex)
 	{
 		super(PowerConverterCore.powerSystemIndustrialCraft, voltageIndex, IEnergyAcceptor.class);
+		if(voltageIndex == 0)
+		{
+			_packetCount = PowerConverterCore.throttleIC2LVProducer.getInt();
+		}
+		else if(voltageIndex == 1)
+		{
+			_packetCount = PowerConverterCore.throttleIC2MVProducer.getInt();
+		}
+		else if(voltageIndex == 2)
+		{
+			_packetCount = PowerConverterCore.throttleIC2HVProducer.getInt();
+		}
+		else if(voltageIndex == 3)
+		{
+			_packetCount = PowerConverterCore.throttleIC2EVProducer.getInt();
+		}
 	}
 	
 	@Override
@@ -71,15 +89,24 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 		}
 		
 		int eu = energy / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
-		if(eu < getMaxEnergyOutput())
-		{
-			return energy;
-		}
-		int producedEu = Math.min(eu, getMaxEnergyOutput());
-		EnergyTileSourceEvent e = new EnergyTileSourceEvent(this, producedEu);
-		MinecraftForge.EVENT_BUS.post(e);
 		
-		return (eu - (producedEu - e.amount)) * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
+		for(int i = 0; i < _packetCount; i++)
+		{
+			if(eu < getMaxEnergyOutput())
+			{
+				return energy;
+			}
+			int producedEu = Math.min(eu, getMaxEnergyOutput());
+			EnergyTileSourceEvent e = new EnergyTileSourceEvent(this, producedEu);
+			MinecraftForge.EVENT_BUS.post(e);
+			eu -= (producedEu - e.amount);
+			if(e.amount == producedEu)
+			{
+				break;
+			}
+		}
+		
+		return eu * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
 	}
 
 	@Override

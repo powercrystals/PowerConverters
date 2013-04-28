@@ -23,7 +23,7 @@ public class TileEntityRailCraftProducer extends TileEntityEnergyProducer<ITankC
 	@Override
 	public int produceEnergy(int energy)
 	{
-		int steam = energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
+		int steam = Math.min(energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput(), PowerConverterCore.throttleSteamProducer.getInt());
 		for(int i = 0; i < 6; i++)
 		{
 			BlockPosition bp = new BlockPosition(this);
