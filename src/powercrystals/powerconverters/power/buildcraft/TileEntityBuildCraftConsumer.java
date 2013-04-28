@@ -2,7 +2,6 @@ package powercrystals.powerconverters.power.buildcraft;
 
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.ForgeDirection;
-import powercrystals.core.power.PowerProviderAdvanced;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 import buildcraft.api.power.IPowerProvider;
@@ -12,11 +11,12 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 {
 	private IPowerProvider _powerProvider;
 	private int _mjLastTick = 0;
+	private long _lastTickInjected;
 	
 	public TileEntityBuildCraftConsumer()
 	{
 		super(PowerConverterCore.powerSystemBuildCraft, 0, IPowerReceptor.class);
-		_powerProvider = new PowerProviderAdvanced();
+		_powerProvider = new PowerProviderPowerConverter(this);
 		_powerProvider.configure(25, 2, 100, 1, 1000);
 	}
 	
@@ -24,22 +24,23 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(getPowerProvider() != null)
+		if(worldObj.getWorldTime() - _lastTickInjected > 1)
 		{
-			getPowerProvider().update(this);
-		}
-		
-		int mjStored = MathHelper.floor_float(_powerProvider.getEnergyStored());
-		if(mjStored > 0)
-		{
-			float used = _powerProvider.useEnergy(1, mjStored, true);
-			_mjLastTick = MathHelper.floor_float(used);
-			storeEnergy((int)(used * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput()));
-		}
-		else
-		{
+			_lastTickInjected = worldObj.getWorldTime();
 			_mjLastTick = 0;
 		}
+	}
+	
+	public void receiveEnergy(float energy)
+	{
+		if(_lastTickInjected != worldObj.getWorldTime())
+		{
+			_lastTickInjected = worldObj.getWorldTime();
+			_mjLastTick = 0;
+		}
+		
+		_mjLastTick += MathHelper.floor_float(energy);
+		storeEnergy((int)(energy * PowerConverterCore.powerSystemBuildCraft.getInternalEnergyPerInput()));
 	}
 	
 	@Override

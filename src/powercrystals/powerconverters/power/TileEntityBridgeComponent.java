@@ -33,7 +33,7 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
 	{
 		super.updateEntity();
 		
-		if(!_initialized)
+		if(!_initialized && !tileEntityInvalid)
 		{
 			onNeighboorChanged();
 			_initialized = true;
