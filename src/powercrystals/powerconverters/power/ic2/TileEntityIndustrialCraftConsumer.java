@@ -38,7 +38,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 			_isAddedToEnergyNet = true;
 		}
 		
-		if(worldObj.getWorldTime() - _lastTickInjected > 20)
+		if(worldObj.getWorldTime() - _lastTickInjected > 2)
 		{
 			_euLastTick = 0;
 		}
