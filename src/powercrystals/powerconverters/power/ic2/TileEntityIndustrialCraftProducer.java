@@ -92,15 +92,11 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
 		
 		for(int i = 0; i < _packetCount; i++)
 		{
-			if(eu < getMaxEnergyOutput())
-			{
-				return energy;
-			}
 			int producedEu = Math.min(eu, getMaxEnergyOutput());
 			EnergyTileSourceEvent e = new EnergyTileSourceEvent(this, producedEu);
 			MinecraftForge.EVENT_BUS.post(e);
 			eu -= (producedEu - e.amount);
-			if(e.amount == producedEu)
+			if(e.amount == producedEu || eu < getMaxEnergyOutput())
 			{
 				break;
 			}
