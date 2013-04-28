@@ -1,5 +1,6 @@
 package powercrystals.powerconverters.power.ic2;
 
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import ic2.api.Direction;
@@ -89,6 +90,16 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	@Override
 	public int injectEnergy(Direction directionFrom, int amount)
 	{
+		if(amount > getMaxSafeInput())
+		{
+			int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
+			int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+			
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+			Block.blocksList[id].dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, meta, 0);
+			return amount;
+		}
+		
 		int pcuNotStored = storeEnergy(amount * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput());
 		int euNotStored = pcuNotStored / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput();
 		
