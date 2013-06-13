@@ -41,13 +41,14 @@ import net.minecraftforge.common.Property;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidDictionary.LiquidRegisterEvent;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
@@ -70,7 +71,7 @@ public class PowerConverterCore extends BaseMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.5.1R2.3.0";
+	public static final String version = "1.5.1R2.3.1B1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -131,8 +132,8 @@ public class PowerConverterCore extends BaseMod
 		loadConfig(c);
 	}
 
-	@Init
-	public void load(FMLInitializationEvent evt) throws Exception
+	@PostInit
+	public void postInit(FMLPostInitializationEvent evt) throws Exception
 	{
 		instance = this;
 		
@@ -264,7 +265,8 @@ public class PowerConverterCore extends BaseMod
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
 		
-		if(Loader.isModLoaded("BasicComponents"))
+		if(Class.forName("universalelectricity.core.UniversalElectricity") != null &&
+				Class.forName("universalelectricity.core.UniversalElectricity").getField("isNetworkActive").getBoolean(null))
 		{
 			converterBlockUniversalElectricity = new BlockPowerConverterUniversalElectricity(blockIdUniversalElectricty.getInt());
 			GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, converterBlockUniversalElectricity.getUnlocalizedName());
@@ -279,26 +281,26 @@ public class PowerConverterCore extends BaseMod
 			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 6), "UE 480V Consumer");
 			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 7), "UE 480V Producer");
 			
-			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
-					"I I", "   ", "IBI",
-					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
-			
-			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
-					"I I", " B ", "I I",
-					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
-			
-			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
-					"IBI", "   ", "I I",
-					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
-			
-			GameRegistry.addRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
-					"IBI", "I I", "I I",
-					Character.valueOf('I'), Item.ingotGold,
-					Character.valueOf('B'), new ItemStack((Block)(Class.forName("universalelectricity.components.common.BasicComponents").getField("blockMachine").get(null)), 1, 4));
-			
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
+						"I I", "   ", "IBI",
+						Character.valueOf('I'), Item.ingotGold,
+						Character.valueOf('B'), "battery"));
+				
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
+						"I I", " B ", "I I",
+						Character.valueOf('I'), Item.ingotGold,
+						Character.valueOf('B'), "battery"));
+				
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
+						"IBI", "   ", "I I",
+						Character.valueOf('I'), Item.ingotGold,
+						Character.valueOf('B'), "battery"));
+				
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
+						"IBI", "I I", "I I",
+						Character.valueOf('I'), Item.ingotGold,
+						Character.valueOf('B'), "battery"));
+				
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0), new ItemStack(converterBlockUniversalElectricity, 1, 1));
 			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 3), new ItemStack(converterBlockUniversalElectricity, 1, 2));
