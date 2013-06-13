@@ -30,7 +30,7 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler
 	public int charge(ItemStack stack, int energyInput)
 	{
 		int eu = energyInput / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
-		eu -= ElectricItem.charge(stack, eu, ((IElectricItem)Item.itemsList[stack.itemID]).getTier(stack), false, false);
+		eu -= ElectricItem.manager.charge(stack, eu, ((IElectricItem)Item.itemsList[stack.itemID]).getTier(stack), false, false);
 		return eu * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerOutput();
 	}
 
@@ -38,7 +38,7 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler
 	public int discharge(ItemStack stack, int energyRequest)
 	{
 		int eu = energyRequest / PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput();
-		eu = ElectricItem.discharge(stack, eu, ((IElectricItem)Item.itemsList[stack.itemID]).getTier(stack), false, false);
+		eu = ElectricItem.manager.discharge(stack, eu, ((IElectricItem)Item.itemsList[stack.itemID]).getTier(stack), false, false);
 		return eu * PowerConverterCore.powerSystemIndustrialCraft.getInternalEnergyPerInput();
 	}
 }
