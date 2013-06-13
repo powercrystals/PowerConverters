@@ -265,50 +265,57 @@ public class PowerConverterCore extends BaseMod
 			TileEntityCharger.registerChargeHandler(new ChargeHandlerUniversalElectricity());
 		}
 		
-		if(Class.forName("universalelectricity.core.UniversalElectricity") != null &&
-				Class.forName("universalelectricity.core.UniversalElectricity").getField("isNetworkActive").getBoolean(null))
+		try
 		{
-			converterBlockUniversalElectricity = new BlockPowerConverterUniversalElectricity(blockIdUniversalElectricty.getInt());
-			GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, converterBlockUniversalElectricity.getUnlocalizedName());
-			GameRegistry.registerTileEntity(TileEntityUniversalElectricityConsumer.class, "powerConverterUEConsumer");
-			GameRegistry.registerTileEntity(TileEntityUniversalElectricityProducer.class, "powerConverterUEProducer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 0), "UE 60V Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 1), "UE 60V Producer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 2), "UE 120V Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 3), "UE 120V Producer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 4), "UE 240V Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 5), "UE 240V Producer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 6), "UE 480V Consumer");
-			LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 7), "UE 480V Producer");
+			if(Class.forName("universalelectricity.core.UniversalElectricity") != null &&
+					Class.forName("universalelectricity.core.UniversalElectricity").getField("isNetworkActive").getBoolean(null))
+			{
+				converterBlockUniversalElectricity = new BlockPowerConverterUniversalElectricity(blockIdUniversalElectricty.getInt());
+				GameRegistry.registerBlock(converterBlockUniversalElectricity, ItemBlockPowerConverterUniversalElectricty.class, converterBlockUniversalElectricity.getUnlocalizedName());
+				GameRegistry.registerTileEntity(TileEntityUniversalElectricityConsumer.class, "powerConverterUEConsumer");
+				GameRegistry.registerTileEntity(TileEntityUniversalElectricityProducer.class, "powerConverterUEProducer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 0), "UE 60V Consumer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 1), "UE 60V Producer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 2), "UE 120V Consumer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 3), "UE 120V Producer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 4), "UE 240V Consumer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 5), "UE 240V Producer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 6), "UE 480V Consumer");
+				LanguageRegistry.addName(new ItemStack(converterBlockUniversalElectricity, 1, 7), "UE 480V Producer");
+				
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
+							"I I", "   ", "IBI",
+							Character.valueOf('I'), Item.ingotGold,
+							Character.valueOf('B'), "battery"));
+					
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
+							"I I", " B ", "I I",
+							Character.valueOf('I'), Item.ingotGold,
+							Character.valueOf('B'), "battery"));
+					
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
+							"IBI", "   ", "I I",
+							Character.valueOf('I'), Item.ingotGold,
+							Character.valueOf('B'), "battery"));
+					
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
+							"IBI", "I I", "I I",
+							Character.valueOf('I'), Item.ingotGold,
+							Character.valueOf('B'), "battery"));
+					
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0), new ItemStack(converterBlockUniversalElectricity, 1, 1));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 3), new ItemStack(converterBlockUniversalElectricity, 1, 2));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2), new ItemStack(converterBlockUniversalElectricity, 1, 3));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 5), new ItemStack(converterBlockUniversalElectricity, 1, 4));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4), new ItemStack(converterBlockUniversalElectricity, 1, 5));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 7), new ItemStack(converterBlockUniversalElectricity, 1, 6));
+				GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6), new ItemStack(converterBlockUniversalElectricity, 1, 7));
+			}
+		}
+		catch(ClassNotFoundException x)
+		{
 			
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0),
-						"I I", "   ", "IBI",
-						Character.valueOf('I'), Item.ingotGold,
-						Character.valueOf('B'), "battery"));
-				
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2),
-						"I I", " B ", "I I",
-						Character.valueOf('I'), Item.ingotGold,
-						Character.valueOf('B'), "battery"));
-				
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4),
-						"IBI", "   ", "I I",
-						Character.valueOf('I'), Item.ingotGold,
-						Character.valueOf('B'), "battery"));
-				
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6),
-						"IBI", "I I", "I I",
-						Character.valueOf('I'), Item.ingotGold,
-						Character.valueOf('B'), "battery"));
-				
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 1), new ItemStack(converterBlockUniversalElectricity, 1, 0));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 0), new ItemStack(converterBlockUniversalElectricity, 1, 1));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 3), new ItemStack(converterBlockUniversalElectricity, 1, 2));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 2), new ItemStack(converterBlockUniversalElectricity, 1, 3));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 5), new ItemStack(converterBlockUniversalElectricity, 1, 4));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 4), new ItemStack(converterBlockUniversalElectricity, 1, 5));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 7), new ItemStack(converterBlockUniversalElectricity, 1, 6));
-			GameRegistry.addShapelessRecipe(new ItemStack(converterBlockUniversalElectricity, 1, 6), new ItemStack(converterBlockUniversalElectricity, 1, 7));
 		}
 
 		if(Loader.isModLoaded("factorization"))
