@@ -1,1 +1,1 @@
-1.5.1R2.3.0 The 1.5.1 port is finally stable!
+1.5.1R2.3.1 Fixed UE compatibility, mostly. It might still not work depending on what UE mods you have installed. Recipes changed to a battery because more UE mods have that than battery boxes.
