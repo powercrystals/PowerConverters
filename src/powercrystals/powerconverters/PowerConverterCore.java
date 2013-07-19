@@ -71,7 +71,7 @@ public class PowerConverterCore extends BaseMod
 {
 	public static final String modId = "PowerConverters";
 	public static final String modName = "Power Converters";
-	public static final String version = "1.5.1R2.3.1";
+	public static final String version = "1.5.1R2.3.2B1";
 	
 	@SidedProxy(clientSide="powercrystals.powerconverters.net.ProxyClient", serverSide="powercrystals.powerconverters.net.ProxyServer")
 	public static IPCProxy proxy;
@@ -119,7 +119,7 @@ public class PowerConverterCore extends BaseMod
 		powerSystemIndustrialCraft = new PowerSystem("IndustrialCraft", "IC2", 1800, 1800, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 32, 128, 512, 2048 }, "EU/t");
 		powerSystemSteam = new PowerSystem("Steam", "STEAM", 875, 875, null, null, "mB/t");
 		powerSystemUniversalElectricity = new PowerSystem("UniversalElectricity", "UE", 10, 10, new String[] { "LV", "MV", "HV", "EV" }, new int[] { 60, 120, 240, 480 }, "W");
-		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 875, 875, null, null, "CG/t");
+		powerSystemFactorization = new PowerSystem("Factorization", "FZ", 175, 175, null, null, "CG/t");
 				
 		PowerSystem.registerPowerSystem(powerSystemBuildCraft);
 		PowerSystem.registerPowerSystem(powerSystemIndustrialCraft);
